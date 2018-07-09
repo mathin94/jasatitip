@@ -301,7 +301,7 @@
         cancelButtonText: 'Batal'
       }).then((result) => {
         if (result.value) {
-          window.location.href="<?php echo base_url('auth/logout') ?>"
+          window.location.href="<?php echo base_url('administrator/logout') ?>"
         }
       })
     });

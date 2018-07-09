@@ -10,7 +10,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Produk</a></li>
+            <li class="breadcrumb-item">Produk</li>
           </ol>
         </div>
       </div>
@@ -86,7 +86,20 @@
             "processing": true, 
             "serverSide": true, 
             "order": [], 
-             
+            "language": {
+              "sSearch": "Pencarian :",
+              "lengthMenu": "Menampilkan _MENU_ data per halaman",
+              "zeroRecords": "Tidak ada data produk",
+              "info": "Menampilkan Halaman _PAGE_ sampai _PAGES_",
+              "infoEmpty": "Tidak ada data",
+              "infoFiltered": "(memfilter dari _MAX_ total data)",
+              "paginate": {
+                  "sFirst": "Pertama", // This is the link to the first page
+                  "sPrevious": "Sebelumnya", // This is the link to the previous page
+                  "sNext": "Selanjutnya", // This is the link to the next page
+                  "sLast": "Akhir" // This is the link to the last page
+              },
+          },
             "ajax": {
                 "url": "<?php echo site_url('produk/json_produk')?>",
                 "type": "POST"

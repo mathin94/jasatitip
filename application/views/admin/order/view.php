@@ -83,7 +83,20 @@
           "processing": true, 
           "serverSide": true, 
           "order": [], 
-           
+          "language": {
+              "sSearch": "Pencarian :",
+              "lengthMenu": "Menampilkan _MENU_ data per halaman",
+              "zeroRecords": "Tidak ada data",
+              "info": "Menampilkan Halaman _PAGE_ sampai _PAGES_",
+              "infoEmpty": "Tidak ada data",
+              "infoFiltered": "(memfilter dari _MAX_ total data)",
+              "paginate": {
+                  "sFirst": "Pertama", // This is the link to the first page
+                  "sPrevious": "Sebelumnya", // This is the link to the previous page
+                  "sNext": "Selanjutnya", // This is the link to the next page
+                  "sLast": "Akhir" // This is the link to the last page
+              },
+          },
           "ajax": {
               "url": "<?php echo $url_json ?>",
               "type": "POST"
