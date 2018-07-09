@@ -1448,6 +1448,33 @@ class Administrator extends CI_Controller {
 		$this->template->load('back', 'admin/report/view', $data);
 	}
 
+	public function cetak_laporan()
+	{
+		allowed('administrator');
+		$this->load->library('pdf');
+		$this->load->helper('tanggal');
+		$this->load->model('Pemesanan_model', 'order');
+
+		$tgl_awal = $this->input->get('start_date');
+		$tgl_akhir = $this->input->get('end_date');
+		$order = $this->order->get_data_range($tgl_awal, $tgl_akhir);
+		$total_earn = $this->order->total_data_range($tgl_awal, $tgl_akhir);
+		$data = array(
+			'title'	=> 'Laporan Transaksi Periode ',
+			'order'	=> $order,
+			'tgl_awal' => date_indo($tgl_awal),
+			'tgl_akhir' => date_indo($tgl_akhir),
+			'total'		=> $total_earn
+		);
+
+
+		$this->pdf->setPaper('A4', 'potrait');
+	    $this->pdf->filename = "Laporan-Penjualan-".$tgl_awal."-to-".$tgl_akhir;
+
+	    $this->pdf->load_view('admin/report/view_pdf', $data);
+
+	}
+
 // =================================================================================================
 
 	// AJAX

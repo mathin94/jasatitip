@@ -4,9 +4,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Pemesanan_model extends CI_Model {
 
 	public $table = 'tb_pemesanan';
-	public $column_order = array(null, 'kode_transaksi','username','status', 'tanggal'); //field yang ada di table produk
-    public $column_search = array('kode_transaksi','username','status', 'tanggal'); //field yang diizin untuk pencarian 
-    public $order = array('id_pemesanan' => 'DESC'); // default order 
+	public $column_order = array(null, 'kode_transaksi','username','status', 'tanggal');
+    public $column_search = array('kode_transaksi','username','status', 'tanggal'); 
+    public $order = array('id_pemesanan' => 'DESC');
 
     public function pesanan_terbaru_limit($limit, $start = 0, $q = NULL) 
     {
@@ -23,9 +23,7 @@ class Pemesanan_model extends CI_Model {
     {
         $this->db->from('tb_pemesanan');
         $this->db->join('tb_users', 'tb_users.id_user = tb_pemesanan.user_id');
-        $this->db->where('status', 'Dalam Proses');
-        $this->db->or_where('status', 'Dikirim');
-        $this->db->or_where('status', 'Terkirim');
+        $this->db->where_in('status', array('Dalam Proses','Dikirim','Terkirim'));
         $this->db->like('kode_transaksi', $q);
     	$this->db->like('tanggal', $q);
         $this->db->order_by('id_pemesanan', 'DESC');
@@ -45,9 +43,7 @@ class Pemesanan_model extends CI_Model {
     public function total_pemesanan()
     {
     	$this->db->from('tb_pemesanan');
-    	$this->db->where('status', 'Sedang Diproses');
-    	$this->db->or_where('status', 'Dikirim');
-    	$this->db->or_where('status', 'Diterima');
+    	$this->db->where_in('status', array('Sedang Diproses','Dikirim', 'Terkirim'));
     	return $this->db->get()->num_rows();
     }
 
@@ -180,35 +176,30 @@ class Pemesanan_model extends CI_Model {
 	}
 
 
-	private function _get_datatables_query($username = NULL, $status = NULL, $kode_transaksi = NULL)
+	private function _get_datatables_query($username = NULL, $status = NULL)
     {
          
         $this->db->from($this->table);
         $this->db->join('tb_users', 'tb_users.id_user = tb_pemesanan.user_id');
 
-        if ($status != NULL) 
+        if ($this->input->post('start_date')) 
         {
-            $no = 1;
-        	foreach ($status as $key => $value) 
-        	{
-                if ($no>1) {
-                    $this->db->or_where('status', $value);
-                }
-                else {
-                    $this->db->where('status', $value);
-                }
-                $no++;
-        	}
+            $this->db->where('tanggal >=', $this->input->post('start_date'));
         }
 
-        if ($kode_transaksi != NULL) 
+        if ($this->input->post('end_date')) 
         {
-        	$this->db->where('kode_transaksi', $kode_transaksi);
+            $this->db->where('tanggal <=', $this->input->post('end_date'));
         }
 
         if ($username != NULL) 
         {
-        	$this->db->where('username', $username);
+            $this->db->where('username', $username);
+        }
+        
+        if ($status != NULL) 
+        {
+            $this->db->where_in('status', $status);
         }
 
         $i = 0;
@@ -245,46 +236,61 @@ class Pemesanan_model extends CI_Model {
             $this->db->order_by(key($order), $order[key($order)]);
         }
     }
- 
-    function get_datatables($username = NULL, $status = NULL, $kode_transaksi = NULL)
+
+    public function _query_report($start_date, $end_date)
     {
-        $this->_get_datatables_query($username, $status, $kode_transaksi);
+        $this->db->from($this->table);
+        $this->db->join('tb_users', 'tb_users.id_user = tb_pemesanan.user_id');
+        $this->db->where('tanggal >=', $start_date);
+        $this->db->where('tanggal <=', $end_date);
+        $this->db->where_in('status', array('Dikirim','Dalam Proses', 'Terkirim'));
+        $this->db->order_by('id_pemesanan', 'desc');
+        
+    }
+    public function get_data_range($start_date, $end_date)
+    {
+        $this->_query_report($start_date, $end_date);
+        return $this->db->get()->result();
+    }
+
+    public function total_data_range($start_date, $end_date)
+    {
+        $this->_query_report($start_date, $end_date);
+        $data = $this->db->get()->result();
+
+        $total = 0;
+        
+        foreach ($data as $row) {
+            $total += $row->total_ongkir+$row->total_harga+$row->total_ongkir;
+        }
+
+        return $total;
+    }
+ 
+    function get_datatables($username = NULL, $status = NULL)
+    {
+        $this->_get_datatables_query($username, $status);
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
         return $query->result();
     }
  
-    function count_filtered($username = NULL, $status = NULL, $kode_transaksi = NULL)
+    function count_filtered($username = NULL, $status = NULL)
     {
-        $this->_get_datatables_query($username, $status, $kode_transaksi);
+        $this->_get_datatables_query($username, $status);
         $query = $this->db->get();
         return $query->num_rows();
     }
  
-    public function count_all($username = NULL, $status = NULL, $kode_transaksi = NULL)
+    public function count_all($username = NULL, $status = NULL)
     {
         $this->db->from($this->table);
         $this->db->join('tb_users', 'tb_users.id_user = tb_pemesanan.user_id');
+
         if ($status != NULL) 
         {
-        	$no = 1;
-            
-            foreach ($status as $key => $value) 
-            {
-                if ($no>1) {
-                    $this->db->or_where('status', $value);
-                }
-                else {
-                    $this->db->where('status', $value);
-                }
-                $no++;
-            }
-        }
-
-        if ($kode_transaksi != NULL) 
-        {
-        	$this->db->where('kode_transaksi', $kode_transaksi);
+        	$this->db->where_in('status', $status);
         }
 
         if ($username != NULL) 

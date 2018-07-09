@@ -28,29 +28,32 @@
             <div class="card-header">
               <div class="row" style="margin-bottom: 10px">
                 <div class="col-md-4">
-                  <h3><?php echo $title ?> <?php echo date('d/m/y') ?></h3>
+                  <h3><?php echo $title ?> </h3>
                 </div>
-                <div class="col-md-4 text-center">
+                <div class="col-md-3 text-center">
+                  <!-- Date range -->
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="fa fa-calendar"></i>
+                        </span>
+                      </div>
+                      <input type="text" class="form-control float-right" id="periode" value="<?php echo date('d/m/Y') . ' - ' . date('d/m/Y') ?>">
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <!-- /.form group -->
                 </div>
                 <div class="col-md-3 text-right">
-                <!-- Date range -->
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-
-                      <span class="input-group-text">
-                        <i class="fa fa-calendar"></i>
-                      </span>
-                    </div>
-                    <input type="text" class="form-control float-right" id="periode" value="<?php echo date('d/m/Y') . ' - ' . date('d/m/Y') ?>">
-                  </div>
-
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
+                
                 </div>
                 <div class="col-md-1 text-right">
-                  <button type="button" class="btn btn-default btn-md" id="cari"><i class="fa fa-search"></i> Cari</button>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <button type="button" class="btn btn-success" id="cetak"><i class="fa fa-file-pdf-o"></i> Cetak Laporan</button>
+                    </div>
+                  </div>
                 </div>
                 
               </div>
@@ -86,7 +89,7 @@
 <script>
   //Date range picker
   $('#periode').daterangepicker({
-    opens: 'left',
+    opens: 'center',
     locale: {
       applyButtonClasses: "btn-success",
       cancelLabel: 'Batal',
@@ -96,12 +99,13 @@
     }
   });
 
-
+  $("#cetak").click(function() {
+    window.open('<?php echo site_url('administrator/cetak_laporan?start_date=') ?>'+$("#periode").data('daterangepicker').startDate.format('YYYY-MM-DD')+'&end_date='+$("#periode").data('daterangepicker').endDate.format('YYYY-MM-DD'), '_blank');
+  });
 
   var oTable;
-  $(document).ready(function() {
 
-      //datatables
+  $(document).ready(function() {
       oTable = $('#table-order').DataTable({ 
           "paging": true,
           "lengthChange": false,
@@ -112,10 +116,26 @@
           "processing": true, 
           "serverSide": true, 
           "order": [], 
-           
+          "language": {
+              "lengthMenu": "Menampilkan _MENU_ data per halaman",
+              "zeroRecords": "Tidak Ada Transaksi Untuk Periode Ini",
+              "info": "Menampilkan Halaman _PAGE_ sampai _PAGES_",
+              "infoEmpty": "Tidak ada data",
+              "infoFiltered": "(memfilter dari _MAX_ total data)",
+              "paginate": {
+                  "sFirst": "Pertama", // This is the link to the first page
+                  "sPrevious": "Sebelumnya", // This is the link to the previous page
+                  "sNext": "Selanjutnya", // This is the link to the next page
+                  "sLast": "Akhir" // This is the link to the last page
+              },
+          },
           "ajax": {
               "url": "<?php echo site_url('ajax/json_laporan') ?>",
-              "type": "POST"
+              "type": "POST",
+              "data": function ( data ) {
+                data.start_date = $("#periode").data('daterangepicker').startDate.format('YYYY-MM-DD');
+                data.end_date = $("#periode").data('daterangepicker').endDate.format('YYYY-MM-DD');
+              }
           },
           "columnDefs": [
           { 
@@ -126,27 +146,9 @@
 
       });
 
-      $("#cari").click(function() {
+      $("#periode").change(function() {
           oTable.draw();
       });
-
-      $.fn.dataTableExt.afnFiltering.push(
-        function(oSettings, aData, iDataIndex){
-          var dateStart = parseDateValue($("#periode").data('daterangepicker').startDate.format('YYYY-MM-DD'));
-          var dateEnd = parseDateValue($("#periode").data('daterangepicker').endDate.format('YYYY-MM-DD'));
-
-// aData represents the table structure as an array of columns, so the script accesses the date value
-// in the firth column of the table via aData[1]
-          var evalDate= parseDateValue(aData[5]);
-
-          if (evalDate >= dateStart && evalDate <= dateEnd) {
-              return true;
-          }
-          else {
-              return false;
-        }
-      });
-
   });
   
 </script>
