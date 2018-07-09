@@ -1469,7 +1469,7 @@ class Administrator extends CI_Controller {
 
 
 		$this->pdf->setPaper('A4', 'potrait');
-	    $this->pdf->filename = "Laporan-Penjualan-".$tgl_awal."-to-".$tgl_akhir;
+	    $this->pdf->filename = "Laporan-Penjualan-".$tgl_awal."-to-".$tgl_akhir.".pdf";
 
 	    $this->pdf->load_view('admin/report/view_pdf', $data);
 

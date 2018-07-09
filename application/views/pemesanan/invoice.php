@@ -58,7 +58,7 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<address>
-							<strong>Tanggal Pemesanan :</strong> <span class="pull-right"><strong>Status Pembayaran :</strong></span><br>
+							<strong>Tanggal Pemesanan :</strong> <span class="pull-right"><strong>Status Pemesanan :</strong></span><br>
 							<?php echo tanggal_indo($pemesanan['tanggal']) ?><span class="pull-right"><?php echo $pemesanan['status'] ?></span><br><br>
 						</address>
 					</div>
@@ -120,8 +120,14 @@
 	</div>
 	<div class="row" style="margin-bottom: 50px;">
 		<div class="col-lg-6 pull-right">
-			<button type="button" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> Cetak Invoice</button>
+			<button type="button" class="btn btn-success" id="cetak"><i class="fa fa-file-pdf-o"></i> Cetak Invoice</button>
 		</div>
 	</div>
 </div>
+
+<script>
+	$("#cetak").click(function() {
+		window.open('<?php echo site_url('pemesanan/cetak_invoice/'.$pemesanan['id_pemesanan']) ?>')
+	});
+</script>
 

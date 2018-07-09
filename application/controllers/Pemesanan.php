@@ -60,6 +60,31 @@ class Pemesanan extends CI_Controller {
         echo json_encode($output);
 	}
 
+	public function cetak_invoice()
+	{
+		allowed('pelanggan');
+		$id = $this->uri->segment(3);
+
+		$this->load->library('pdf');
+		$this->load->helper('tanggal');
+
+		$pemesanan = $this->order->get_pemesanan_one($id);
+
+		$data = array(
+			'title'		=> 'Rincian Pemesanan',
+			'total'		=> 'Rp. ' . number_format($pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['kode_unik']),
+			'kode_transaksi'=> $pemesanan['kode_transaksi'],
+			'totalbayar'	=> $pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['kode_unik'],
+			'pemesanan'		=> $pemesanan,
+			'totber'		=> $this->total_berat($id),
+			'detail_pesanan'=> $this->order->get_detail($id)
+		);
+
+		$this->pdf->setPaper('A4', 'potrait');
+	    $this->pdf->filename = "invoice-".$pemesanan['kode_transaksi'].".pdf";
+	    $this->pdf->load_view('pemesanan/invoice_pdf', $data);
+	}
+
 	public function invoice($id)
 	{
 		$users = $this->Users_model->get_by_username($this->session->userdata('username'));
