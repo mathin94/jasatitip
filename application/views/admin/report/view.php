@@ -98,11 +98,11 @@
 
 
 
-  var table;
+  var oTable;
   $(document).ready(function() {
 
       //datatables
-      table = $('#table-order').DataTable({ 
+      oTable = $('#table-order').DataTable({ 
           "paging": true,
           "lengthChange": false,
           "searching": false,
@@ -127,8 +127,24 @@
       });
 
       $("#cari").click(function() {
-        var tglawal = $("#periode").data('daterangepicker').startDate.format('YYYY-MM-DD');
-        var tglakhir = $("#periode").data('daterangepicker').endDate.format('YYYY-MM-DD');
+          oTable.draw();
+      });
+
+      $.fn.dataTableExt.afnFiltering.push(
+        function(oSettings, aData, iDataIndex){
+          var dateStart = parseDateValue($("#periode").data('daterangepicker').startDate.format('YYYY-MM-DD'));
+          var dateEnd = parseDateValue($("#periode").data('daterangepicker').endDate.format('YYYY-MM-DD'));
+
+// aData represents the table structure as an array of columns, so the script accesses the date value
+// in the firth column of the table via aData[1]
+          var evalDate= parseDateValue(aData[5]);
+
+          if (evalDate >= dateStart && evalDate <= dateEnd) {
+              return true;
+          }
+          else {
+              return false;
+        }
       });
 
   });

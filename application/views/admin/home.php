@@ -30,9 +30,9 @@
                 <p>Pesanan Baru</p>
               </div>
               <div class="icon">
-                <i class="ion ion-bag"></i>
+                <i class="fa fa-shopping-bag"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="#" class="small-box-footer">Lihat Pesanan <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -45,7 +45,7 @@
                 <p>Total Produk</p>
               </div>
               <div class="icon">
-                <i class="ion ion-stats-bars"></i>
+                <i class="fa fa-dropbox"></i>
               </div>
               <a href="<?php echo base_url('administrator/produk') ?>" class="small-box-footer">Lihat Produk <i class="fa fa-arrow-circle-right"></i></a>
             </div>
@@ -60,7 +60,7 @@
                 <p>Pelanggan Terdaftar</p>
               </div>
               <div class="icon">
-                <i class="ion ion-person-add"></i>
+                <i class="fa fa-users"></i>
               </div>
               <a href="<?php echo base_url('administrator/daftar_pelanggan') ?>" class="small-box-footer">Lihat Daftar Pelanggan <i class="fa fa-arrow-circle-right"></i></a>
             </div>
@@ -75,9 +75,9 @@
                 <p>Total Pemesanan Selesai</p>
               </div>
               <div class="icon">
-                <i class="ion ion-pie-graph"></i>
+                <i class="fa fa-pie-chart"></i>
               </div>
-              <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+              <a href="#" class="small-box-footer">Lihat Pesanan <i class="fa fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
