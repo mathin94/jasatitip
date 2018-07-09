@@ -11,6 +11,11 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
+
+-- Dumping database structure for jasatitip
+CREATE DATABASE IF NOT EXISTS `jasatitip` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `jasatitip`;
+
 -- Dumping structure for table jasatitip.ci_sessions
 CREATE TABLE IF NOT EXISTS `ci_sessions` (
   `session_id` varchar(40) NOT NULL DEFAULT '0',
@@ -55,10 +60,10 @@ CREATE TABLE IF NOT EXISTS `identitas` (
   PRIMARY KEY (`id_identitas`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.identitas: ~1 rows (approximately)
+-- Dumping data for table jasatitip.identitas: ~0 rows (approximately)
 /*!40000 ALTER TABLE `identitas` DISABLE KEYS */;
 REPLACE INTO `identitas` (`id_identitas`, `kabupaten_id`, `nama_website`, `email`, `facebook`, `no_telp`, `rekening`, `nama_bank`, `alamat`, `favicon`, `logo`) VALUES
-	(1, 32152, 'JasTip - Jasa Pemesanan Barang Online', 'admin@jastip.com', 'http://facebook.com/jastip', '085703215671', '11824587', 'Bank BRI', 'Cikole', 'favicon.png', 'logo-01.png');
+	(1, 32152, 'JasTip - Jasa Pemesanan Barang Online', 'admin@jastip.com', 'http://facebook.com/jastip', '085703215671', '11824587', 'Bank BRI', 'Jl. Cemerlang No. 100 Kec. Cemerlang RT / RW 19/01', 'favicon.png', 'logo-01.png');
 /*!40000 ALTER TABLE `identitas` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.kabupaten
@@ -7587,7 +7592,7 @@ CREATE TABLE IF NOT EXISTS `kelurahan` (
   PRIMARY KEY (`id_kelurahan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table jasatitip.kelurahan: ~81,141 rows (approximately)
+-- Dumping data for table jasatitip.kelurahan: ~80,692 rows (approximately)
 /*!40000 ALTER TABLE `kelurahan` DISABLE KEYS */;
 REPLACE INTO `kelurahan` (`id_kelurahan`, `nama_kelurahan`, `kecamatan_id`) VALUES
 	(4, 'KEUDE BAKONGAN', 3),
@@ -88827,7 +88832,7 @@ CREATE TABLE IF NOT EXISTS `tb_alamat_kirim` (
   PRIMARY KEY (`id_alamat`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_alamat_kirim: ~2 rows (approximately)
+-- Dumping data for table jasatitip.tb_alamat_kirim: ~1 rows (approximately)
 /*!40000 ALTER TABLE `tb_alamat_kirim` DISABLE KEYS */;
 REPLACE INTO `tb_alamat_kirim` (`id_alamat`, `kecamatan_id`, `nama_alamat`, `nama_penerima`, `nomor_penerima`, `alamat_lengkap`, `kode_pos`) VALUES
 	(2, 26869, 'Alamat Rumah', 'Anggi Permata Sary', '085861771511', 'Kp Cikaroya RT/RT 17/03 Ds.Gunungjaya ', 43152),
@@ -88862,7 +88867,7 @@ CREATE TABLE IF NOT EXISTS `tb_konfirmasi_transfer` (
   `waktu_konfirmasi` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `bukti_transfer` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_konfirmasi`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table jasatitip.tb_konfirmasi_transfer: ~6 rows (approximately)
 /*!40000 ALTER TABLE `tb_konfirmasi_transfer` DISABLE KEYS */;
@@ -88872,7 +88877,8 @@ REPLACE INTO `tb_konfirmasi_transfer` (`id_konfirmasi`, `kode_transaksi`, `nama_
 	(6, 'TRX-29062018-000001', 'Mathin', 'BNI', '21238291038', 'Bank BCA - 11805462', '5519072', 'N', '2018-06-30 14:15:20', NULL),
 	(7, 'TRX-29062018-000001', 'Mathin', 'BNI', '21238291038', 'Bank BCA - 11805462', '5519072', 'N', '2018-06-30 14:16:01', NULL),
 	(8, 'TRX-29062018-000001', 'Mathin', 'BNI', '21238291038', 'Bank BCA - 11805462', '5519072', 'N', '2018-06-30 14:17:04', NULL),
-	(9, 'TRX-29062018-000001', 'Mathin', 'BNI', '21238291038', 'Bank BCA - 11805462', '5519072', 'N', '2018-06-30 14:18:05', NULL);
+	(9, 'TRX-29062018-000001', 'Mathin', 'BNI', '21238291038', 'Bank BCA - 11805462', '5519072', 'N', '2018-06-30 14:18:05', NULL),
+	(10, 'TRX-07072018-000001', 'Mathin', 'BCA', '21938129038', 'Bank BCA - 11805462', '4516645', 'N', '2018-07-07 11:31:31', 'a7fe2c0be084b2142e3bef1522574c3c.png');
 /*!40000 ALTER TABLE `tb_konfirmasi_transfer` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_ongkir
@@ -88881,15 +88887,16 @@ CREATE TABLE IF NOT EXISTS `tb_ongkir` (
   `kecamatan_id` int(10) unsigned NOT NULL DEFAULT '0',
   `biaya` varchar(255) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_ongkir`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_ongkir: ~4 rows (approximately)
+-- Dumping data for table jasatitip.tb_ongkir: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tb_ongkir` DISABLE KEYS */;
 REPLACE INTO `tb_ongkir` (`id_ongkir`, `kecamatan_id`, `biaya`) VALUES
 	(1, 26869, '8000'),
 	(2, 32158, '5000'),
 	(3, 26883, '10000'),
-	(4, 32177, '9000');
+	(4, 32177, '9000'),
+	(5, 32158, '5000');
 /*!40000 ALTER TABLE `tb_ongkir` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_pemesanan
@@ -88905,14 +88912,16 @@ CREATE TABLE IF NOT EXISTS `tb_pemesanan` (
   `kode_unik` int(11) NOT NULL,
   PRIMARY KEY (`id_pemesanan`),
   UNIQUE KEY `kode_transaksi` (`kode_transaksi`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_pemesanan: ~3 rows (approximately)
+-- Dumping data for table jasatitip.tb_pemesanan: ~5 rows (approximately)
 /*!40000 ALTER TABLE `tb_pemesanan` DISABLE KEYS */;
 REPLACE INTO `tb_pemesanan` (`id_pemesanan`, `user_id`, `alamat_id`, `kode_transaksi`, `total_ongkir`, `total_harga`, `tanggal`, `status`, `kode_unik`) VALUES
 	(2, 15, 2, 'TRX-29062018-000001', '120000', '5399000', '2018-06-29', 'Dalam Proses', 72),
 	(3, 15, 2, 'TRX-30062018-000001', '696000', '13038000', '2018-06-30', 'Belum Dibayar', 361),
-	(4, 15, 3, 'TRX-03072018-000001', '140000', '680000', '2018-07-03', 'Belum Dibayar', 268);
+	(4, 15, 3, 'TRX-03072018-000001', '140000', '680000', '2018-07-03', 'Belum Dibayar', 268),
+	(5, 15, 2, 'TRX-07072018-000001', '376000', '4140000', '2018-07-07', 'Dalam Proses', 645),
+	(6, 15, 2, 'TRX-07072018-000002', '120000', '5399000', '2018-07-07', 'Belum Dibayar', 364);
 /*!40000 ALTER TABLE `tb_pemesanan` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_pemesanan_detail
@@ -88923,16 +88932,19 @@ CREATE TABLE IF NOT EXISTS `tb_pemesanan_detail` (
   `harga` varchar(50) NOT NULL DEFAULT '0',
   `qty` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_pemesanan_detail`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_pemesanan_detail: ~5 rows (approximately)
+-- Dumping data for table jasatitip.tb_pemesanan_detail: ~7 rows (approximately)
 /*!40000 ALTER TABLE `tb_pemesanan_detail` DISABLE KEYS */;
 REPLACE INTO `tb_pemesanan_detail` (`id_pemesanan_detail`, `pemesanan_id`, `produk_id`, `harga`, `qty`) VALUES
 	(1, 2, 6, '5399000', 1),
 	(2, 3, 6, '5399000', 2),
 	(3, 3, 1, '1900000', 1),
 	(4, 3, 7, '340000', 1),
-	(5, 4, 7, '340000', 2);
+	(5, 4, 7, '340000', 2),
+	(6, 5, 1, '1900000', 2),
+	(7, 5, 7, '340000', 1),
+	(8, 6, 6, '5399000', 1);
 /*!40000 ALTER TABLE `tb_pemesanan_detail` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_produk
@@ -88974,14 +88986,15 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_users: ~3 rows (approximately)
+-- Dumping data for table jasatitip.tb_users: ~4 rows (approximately)
 /*!40000 ALTER TABLE `tb_users` DISABLE KEYS */;
 REPLACE INTO `tb_users` (`id_user`, `email`, `nama_lengkap`, `username`, `password`, `role`, `aktif`, `waktu_daftar`) VALUES
-	(1, 'admin@jastip.test', 'Admin', 'admin', '$2y$11$yXpjJRZrzOS00NtCbBcdquuc2rQbNuEu1m9iLHvEgnzlWFPu9EwUu', 'administrator', 'Y', '2018-07-02 12:07:46'),
-	(15, 'simdig.tb@gmail.com', 'Anggi Permata', 'anggi', '$2y$11$1DPC0kv6bIwHDnakCvMOeuQ7d/T9QOYhS3tnwo000Yy7lsC/Sy72q', 'pelanggan', 'Y', '2018-07-02 12:07:46'),
-	(16, 'acengpilek@ueo.com', 'Aceng Pilek', 'aceng', '$2y$11$d.qKQ8eM6t7TZjH1A.s/ROmmcgKxnAbdckLeD4KRq5BZ8jmPgHveu', 'pelanggan', 'N', '2018-07-05 11:18:42');
+	(1, 'admin@jastip.test', 'Admin', 'admin', '$2y$11$zRxaDeTqRo/BcVHyzkWLCeQdoiP8ZXAJoBI/LWVLlIZejtDq3L9ze', 'administrator', 'Y', '2018-07-02 12:07:46'),
+	(15, 'simdig.tb@gmail.com', 'Anggi Permata', 'anggi', '$2y$11$4x5Kuk1ASkss.apkcbT0M.X40KojMSUa9tlm3TpUycMlyguLupgui', 'pelanggan', 'Y', '2018-07-02 12:07:46'),
+	(16, 'acengpilek@ueo.com', 'Aceng Pilek', 'aceng', '$2y$11$d.qKQ8eM6t7TZjH1A.s/ROmmcgKxnAbdckLeD4KRq5BZ8jmPgHveu', 'pelanggan', 'Y', '2018-07-05 11:18:42'),
+	(18, 'nurulandroid@gmail.com', 'Nurul Rahayu', 'billy', '$2y$11$7O9ANvgw/RN/rkNW.p.K1uJy6sSl4TLpzhOO/ZB6TgETH2QjhFrp6', 'administrator', 'Y', '2018-07-07 13:34:53');
 /*!40000 ALTER TABLE `tb_users` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_user_alamat
