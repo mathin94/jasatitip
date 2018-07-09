@@ -187,6 +187,36 @@ class Ajax extends CI_Controller {
         echo json_encode($output);
 	}
 
+    public function json_laporan()
+    {
+        $list = $this->order->get_datatables(NULL, array('Dalam Proses', 'Dikirim', 'Terkirim'));
+
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->kode_transaksi;
+            $row[] = $field->email;
+            $row[] = $field->username;
+            $row[] = $field->tanggal;
+            $row[] = 'Rp. ' . number_format($field->total_harga+$field->total_ongkir+$field->kode_unik);
+ 
+            $data[] = $row;
+        }
+ 
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->order->count_all(NULL, array('Dalam Proses','Dikirim', 'Terkirim')),
+            "recordsFiltered" => $this->order->count_filtered(NULL, array('Dalam Proses','Dikirim', 'Terkirim')),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
 	public function json_order_baru()
 	{
 		$role = 'pelanggan';

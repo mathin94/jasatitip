@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo assets_back() ?>css/adminlte.min.css">
+  <!-- animate css -->
+  <link rel="stylesheet" type="text/css" href="<?php echo assets_front() ?>vendor/animate/animate.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
@@ -28,7 +30,7 @@
 
       <form action="<?php echo base_url() ?>administrator/login_proses" method="post">
         <div class="form-group has-feedback">
-          <input type="text" class="form-control" placeholder="Username / E-Mail" name="username">
+          <input type="text" class="form-control" placeholder="Username / E-Mail" name="username" autofocus>
         </div>
         <div class="form-group has-feedback">
           <input type="password" class="form-control" placeholder="Password" name="password">
@@ -54,5 +56,22 @@
 <!-- jQuery -->
 <script src="<?php echo assets_back() ?>plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
+
 <script src="<?php echo assets_back() ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo base_url() ?>assets/js/bootstrap-notify.min.js"></script>
+<script>
+    function notifikasi(pesan,tipe, ico = '') {
+      $.notify({
+        // options
+        icon: ico,
+        message: pesan,
+      },{
+        // settings
+        type: tipe,
+        z_index: 9999
+      });
+    }
+</script>
+
+<?php echo $this->session->flashdata('notifikasi'); ?>
 </html>

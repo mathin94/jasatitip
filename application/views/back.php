@@ -10,8 +10,12 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?php echo assets_back() ?>plugins/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <link rel="stylesheet" href="<?php echo assets_back() ?>css/ionicons.min.css">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="<?php echo assets_back() ?>plugins/daterangepicker/daterangepicker.css">
+  <!-- animate css -->
   <link rel="stylesheet" type="text/css" href="<?php echo assets_front() ?>vendor/animate/animate.css">
+  <!-- datatables css -->
   <link rel="stylesheet" type="text/css" href="<?php echo assets_back() ?>plugins/datatables/dataTables.bootstrap4.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo assets_back() ?>css/adminlte.min.css">
@@ -27,6 +31,10 @@
   <script src="<?php echo assets_back() ?>plugins/datatables/jquery.dataTables.min.js"></script>
   <script src="<?php echo assets_back() ?>plugins/datatables/dataTables.bootstrap4.js"></script>
   <script src="<?php echo base_url() ?>assets/js/bootstrap-notify.min.js"></script>
+  <!-- daterange js -->
+  <script src="<?php echo assets_back() ?>plugins/daterangepicker/moment.min.js"></script>
+  <script src="<?php echo assets_back() ?>plugins/daterangepicker/daterangepicker.min.js"></script>
+  <script src="<?php echo assets_back() ?>plugins/daterangepicker/id.js"></script>
   <script>
     function notifikasi(pesan,tipe, ico = '') {
       $.notify({
@@ -176,33 +184,12 @@
             </a>
           </li>
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
+            <a href="<?php echo base_url('administrator/laporan_penjualan') ?>" class="nav-link">
               <i class="nav-icon fa fa-bar-chart"></i>
               <p>
-                Laporan
-                <i class="fa fa-angle-left right"></i>
+                Laporan Penjualan
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Laporan Harian</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Laporan Mingguan</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fa fa-circle-o nav-icon"></i>
-                  <p>Laporan Bulanan</p>
-                </a>
-              </li>
-            </ul>
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">

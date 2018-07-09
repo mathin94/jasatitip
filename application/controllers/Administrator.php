@@ -1255,10 +1255,6 @@ class Administrator extends CI_Controller {
         if (empty($cekdata)) {
             $this->load->view('admin/login');
         } else {
-        	$cekdata = $this->session->userdata('role');
-        	if ($cekdata) {
-        		var_dump($cekdata);
-        	}
         	echo "<script>document.location.href='".base_url()."';</script>";
         }
 	}
@@ -1285,20 +1281,21 @@ class Administrator extends CI_Controller {
 				if($cekdata['role']=='administrator')
 				{
 					$this->session->set_flashdata('notifikasi', '<script>
-						notifikasi("Login Sukses", "success", "fa fa-check")</script>');
+						notifikasi("Login Sukses, Selamat Bekerja ...", "success", "fa fa-check")</script>');
 					redirect('administrator');
 				}
 			    else
 			    {
-				    echo "<script>alert('Anda Bukan Administrator')</script>";
-				    $this->session->unset_userdata('logged_in');
-				    redirect(site_url('administrator/login'));
+				    $this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Bukan Administrator ..", "danger", "fa fa-exclamation")</script>');
+		    		redirect(site_url());
 			    }
 			} else {
-			    echo "<script>alert('Login Gagal');document.location.href='".base_url('administrator/login')."';</script>";
+			    $this->session->set_flashdata('notifikasi', '<script>notifikasi("Login Gagal , Username / Password Salah", "danger", "fa fa-exclamation")</script>');
 			    $this->session->unset_userdata('logged_in');
+	    		redirect(site_url('administrator/login'));
 			}
 		} else {
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi("Login Gagal , Username / Password Salah", "danger", "fa fa-exclamation")</script>');
     		redirect(site_url('administrator/login'));
 		}
 	}
@@ -1441,13 +1438,14 @@ class Administrator extends CI_Controller {
 	// Laporan
 	// 
 	
-	public function laporan_harian()
+	public function laporan_penjualan()
 	{
+		allowed('administrator');
 		$data = array(
-			'title'	=> 'Laporan Penjualan Harian'
+			'title'	=> 'Laporan Penjualan'
 		);
 
-		$this->template->load('back', 'admin/report/harian', $data);
+		$this->template->load('back', 'admin/report/view', $data);
 	}
 
 // =================================================================================================
