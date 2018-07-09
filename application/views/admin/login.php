@@ -45,7 +45,7 @@
       </form>
 
       <p class="mb-1">
-        <a href="#">Lupa Password</a>
+        <!-- <a href="#">Lupa Password</a> -->
       </p>
     </div>
     <!-- /.login-card-body -->
