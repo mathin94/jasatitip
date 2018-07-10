@@ -134,56 +134,6 @@ class Auth extends CI_Controller {
 
 	            	$this->session->set_flashdata('notifikasi', '<script>notifikasi("Pendaftaran Sukses Silahkan Login", "success", "fa fa-check")</script>');
 	            	redirect('auth/login');
-	            	
-	       //      	//enkripsi id
-	       //      	$encrypted_id = md5($id);
-
-	       //      	$this->load->library('email');
-				    // $config 				= array();
-				    // $config['charset'] 		= 'utf-8';
-				    // $config['useragent'] 	= 'Codeigniter';
-				    // $config['protocol']		= "smtp";
-				    // $config['mailtype']		= "html";
-				    // $config['smtp_host']	= "smtp.gmail.com";//pengaturan smtp
-				    // $config['smtp_port']	= "465";
-				    // $config['smtp_timeout']	= "400";
-				    // $config['smtp_user']	= "simdig.tkj1@gmail.com"; // isi dengan email kamu
-				    // $config['smtp_pass']	= "backtrackr2"; // isi dengan password kamu
-				    // $config['crlf']			="\r\n"; 
-				    // $config['newline']		="\r\n"; 
-				    // $config['wordwrap'] 	= TRUE;
-				    // //memanggil library email dan set konfigurasi untuk pengiriman email
-				   
-				    // $this->email->initialize($config);
-
-				    // //konfigurasi pengiriman
-				    // $this->email->from($config['smtp_user'], 'CodesQuery');
-				    // $this->email->to($email);
-				    // $this->email->subject("Verifikasi Akun Jastip");
-				    // $this->email->message(
-				    //  "terimakasih telah melakuan registrasi, untuk memverifikasi silahkan klik tautan dibawah ini<br><br>".
-				    //   site_url("auth/verifikasi_akun/$encrypted_id")
-				    // );
-				  
-				    // if($this->email->send())
-				    // {
-				    // 	$data = [
-				    //    		'title'		=> 'Pendaftaran Pengguna Berhasil',
-				    //    		'response'	=> 'Berhasil melakukan registrasi, silahkan cek email kamu',
-				    //    		'debug'		=> $this->email->print_debugger()
-				    //    	];
-        //     			$this->template->load('front','auth/register_response',$data);
-				    // }
-				    // else
-				    // {
-				    //    	$data = [
-				    //    		'title'		=> 'Pendaftaran Pengguna Berhasil',
-				    //    		'response'	=> 'Berhasil Melakukan Registrasi, Namun Gagal Mengirimkan Email Verifikasi, Silahkan tunggu akun anda di verifikasi manual oleh admin !',
-				    //    		'debug'		=> $this->email->print_debugger()
-				    //    	];
-        //     			$this->template->load('front','auth/register_response',$data);
-				    // }
-
 	            }
             }
             else
