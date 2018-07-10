@@ -79,7 +79,7 @@ class Users extends CI_Controller {
             else
             {
 				$this->Alamat_model->insert_alamat($alamat, $users['id_user']);
-				$this->session->set_flashdata('alamat_sukses', '<script>notifikasi("Tambah Data Alamat Berhasil", "success", "fa fa-check")</script>');
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Tambah Data Alamat Berhasil", "success", "fa fa-check")</script>');
 				redirect('users/profile');
             }
 		}

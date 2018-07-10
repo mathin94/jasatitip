@@ -125,7 +125,7 @@ class Auth extends CI_Controller {
 	            		'email'			=> $email,
 	            		'username'		=> $username,
 	            		'password'		=> $this->Auth_model->makeHash($password),
-	            		'aktif'			=> 'N',
+	            		'aktif'			=> 'Y',
 	            		'role'			=> 'pelanggan'
 	            	);
 
@@ -147,8 +147,8 @@ class Auth extends CI_Controller {
 				    // $config['smtp_host']	= "smtp.gmail.com";//pengaturan smtp
 				    // $config['smtp_port']	= "465";
 				    // $config['smtp_timeout']	= "400";
-				    // $config['smtp_user']	= "mathin2104@gmail.com"; // isi dengan email kamu
-				    // $config['smtp_pass']	= "backtrack"; // isi dengan password kamu
+				    // $config['smtp_user']	= "simdig.tkj1@gmail.com"; // isi dengan email kamu
+				    // $config['smtp_pass']	= "backtrackr2"; // isi dengan password kamu
 				    // $config['crlf']			="\r\n"; 
 				    // $config['newline']		="\r\n"; 
 				    // $config['wordwrap'] 	= TRUE;
@@ -192,7 +192,8 @@ class Auth extends CI_Controller {
             	$this->template->load('front','auth/register',$data);
             }
         } else {
-        	echo "<script>alert('anda sudah login');document.location.href='".base_url()."';</script>";
+        	$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Telah Login", "success", "fa fa-check")</script>');
+        	redirect(site_url());
         }
 	}
 

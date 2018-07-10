@@ -11,12 +11,8 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-
--- Dumping database structure for jasatitip
-CREATE DATABASE IF NOT EXISTS `jasatitip` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `jasatitip`;
-
 -- Dumping structure for table jasatitip.ci_sessions
+DROP TABLE IF EXISTS `ci_sessions`;
 CREATE TABLE IF NOT EXISTS `ci_sessions` (
   `session_id` varchar(40) NOT NULL DEFAULT '0',
   `ip_address` varchar(45) NOT NULL DEFAULT '0',
@@ -32,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 /*!40000 ALTER TABLE `ci_sessions` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.halamanstatis
+DROP TABLE IF EXISTS `halamanstatis`;
 CREATE TABLE IF NOT EXISTS `halamanstatis` (
   `id_halaman` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `judul` varchar(255) NOT NULL,
@@ -45,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `halamanstatis` (
 /*!40000 ALTER TABLE `halamanstatis` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.identitas
+DROP TABLE IF EXISTS `identitas`;
 CREATE TABLE IF NOT EXISTS `identitas` (
   `id_identitas` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `kabupaten_id` int(11) NOT NULL DEFAULT '0',
@@ -60,13 +58,14 @@ CREATE TABLE IF NOT EXISTS `identitas` (
   PRIMARY KEY (`id_identitas`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.identitas: ~0 rows (approximately)
+-- Dumping data for table jasatitip.identitas: ~1 rows (approximately)
 /*!40000 ALTER TABLE `identitas` DISABLE KEYS */;
-REPLACE INTO `identitas` (`id_identitas`, `kabupaten_id`, `nama_website`, `email`, `facebook`, `no_telp`, `rekening`, `nama_bank`, `alamat`, `favicon`, `logo`) VALUES
+INSERT IGNORE INTO `identitas` (`id_identitas`, `kabupaten_id`, `nama_website`, `email`, `facebook`, `no_telp`, `rekening`, `nama_bank`, `alamat`, `favicon`, `logo`) VALUES
 	(1, 32152, 'JasTip - Jasa Pemesanan Barang Online', 'admin@jastip.com', 'http://facebook.com/jastip', '085703215671', '11824587', 'Bank BRI', 'Jl. Cemerlang No. 100 Kec. Cemerlang RT / RW 19/01', 'favicon.png', 'logo-01.png');
 /*!40000 ALTER TABLE `identitas` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.kabupaten
+DROP TABLE IF EXISTS `kabupaten`;
 CREATE TABLE IF NOT EXISTS `kabupaten` (
   `id_kabupaten` int(11) NOT NULL,
   `nama_kabupaten` varchar(45) DEFAULT NULL,
@@ -76,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `kabupaten` (
 
 -- Dumping data for table jasatitip.kabupaten: ~497 rows (approximately)
 /*!40000 ALTER TABLE `kabupaten` DISABLE KEYS */;
-REPLACE INTO `kabupaten` (`id_kabupaten`, `nama_kabupaten`, `provinsi_id`) VALUES
+INSERT IGNORE INTO `kabupaten` (`id_kabupaten`, `nama_kabupaten`, `provinsi_id`) VALUES
 	(2, 'ACEH SELATAN', 1),
 	(269, 'ACEH TENGGARA', 1),
 	(671, 'ACEH TIMUR', 1),
@@ -577,6 +576,7 @@ REPLACE INTO `kabupaten` (`id_kabupaten`, `nama_kabupaten`, `provinsi_id`) VALUE
 /*!40000 ALTER TABLE `kabupaten` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.kecamatan
+DROP TABLE IF EXISTS `kecamatan`;
 CREATE TABLE IF NOT EXISTS `kecamatan` (
   `id_kecamatan` int(11) NOT NULL,
   `nama_kecamatan` varchar(45) DEFAULT NULL,
@@ -586,7 +586,7 @@ CREATE TABLE IF NOT EXISTS `kecamatan` (
 
 -- Dumping data for table jasatitip.kecamatan: ~6,995 rows (approximately)
 /*!40000 ALTER TABLE `kecamatan` DISABLE KEYS */;
-REPLACE INTO `kecamatan` (`id_kecamatan`, `nama_kecamatan`, `kabupaten_id`) VALUES
+INSERT IGNORE INTO `kecamatan` (`id_kecamatan`, `nama_kecamatan`, `kabupaten_id`) VALUES
 	(3, 'BAKONGAN', 2),
 	(9, 'KLUET UTARA', 2),
 	(29, 'KLUET SELATAN', 2),
@@ -7585,6 +7585,7 @@ REPLACE INTO `kecamatan` (`id_kecamatan`, `nama_kecamatan`, `kabupaten_id`) VALU
 /*!40000 ALTER TABLE `kecamatan` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.kelurahan
+DROP TABLE IF EXISTS `kelurahan`;
 CREATE TABLE IF NOT EXISTS `kelurahan` (
   `id_kelurahan` int(11) NOT NULL,
   `nama_kelurahan` varchar(45) DEFAULT NULL,
@@ -7592,9 +7593,9 @@ CREATE TABLE IF NOT EXISTS `kelurahan` (
   PRIMARY KEY (`id_kelurahan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table jasatitip.kelurahan: ~80,692 rows (approximately)
+-- Dumping data for table jasatitip.kelurahan: ~81,141 rows (approximately)
 /*!40000 ALTER TABLE `kelurahan` DISABLE KEYS */;
-REPLACE INTO `kelurahan` (`id_kelurahan`, `nama_kelurahan`, `kecamatan_id`) VALUES
+INSERT IGNORE INTO `kelurahan` (`id_kelurahan`, `nama_kelurahan`, `kecamatan_id`) VALUES
 	(4, 'KEUDE BAKONGAN', 3),
 	(5, 'UJUNG MANGKI', 3),
 	(6, 'UJUNG PADANG', 3),
@@ -36997,9 +36998,9 @@ REPLACE INTO `kelurahan` (`id_kelurahan`, `nama_kelurahan`, `kecamatan_id`) VALU
 	(32625, 'KARIKIL', 32622),
 	(32626, 'LINGGAJAYA', 32622),
 	(32627, 'CIPAWITRA', 32622),
-	(32628, 'SAMBONGPARI', 32622),
-	(32629, 'SAMBONGJAYA', 32622);
-REPLACE INTO `kelurahan` (`id_kelurahan`, `nama_kelurahan`, `kecamatan_id`) VALUES
+	(32628, 'SAMBONGPARI', 32622);
+INSERT IGNORE INTO `kelurahan` (`id_kelurahan`, `nama_kelurahan`, `kecamatan_id`) VALUES
+	(32629, 'SAMBONGJAYA', 32622),
 	(32630, 'CIPARI', 32622),
 	(32632, 'SUKAMULYA', 32631),
 	(32633, 'SUKARINDIK', 32631),
@@ -67475,9 +67476,9 @@ REPLACE INTO `kelurahan` (`id_kelurahan`, `nama_kelurahan`, `kecamatan_id`) VALU
 	(66354, 'KOLONGAN MITUNG', 66351),
 	(66355, 'KOLONGAN BEHA', 66351),
 	(66356, 'KOLONGAN BEHA BARU', 66351),
-	(66357, 'KOLONGAN AKEMBAWI', 66351),
-	(66359, 'LESA', 66358);
-REPLACE INTO `kelurahan` (`id_kelurahan`, `nama_kelurahan`, `kecamatan_id`) VALUES
+	(66357, 'KOLONGAN AKEMBAWI', 66351);
+INSERT IGNORE INTO `kelurahan` (`id_kelurahan`, `nama_kelurahan`, `kecamatan_id`) VALUES
+	(66359, 'LESA', 66358),
 	(66360, 'ENENGPAHEMBANG', 66358),
 	(66361, 'TAPUANG', 66358),
 	(66362, 'TIDORE', 66358),
@@ -88741,6 +88742,7 @@ REPLACE INTO `kelurahan` (`id_kelurahan`, `nama_kelurahan`, `kecamatan_id`) VALU
 /*!40000 ALTER TABLE `kelurahan` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.provinsi
+DROP TABLE IF EXISTS `provinsi`;
 CREATE TABLE IF NOT EXISTS `provinsi` (
   `id_provinsi` int(11) NOT NULL,
   `nama_provinsi` varchar(45) DEFAULT NULL,
@@ -88749,7 +88751,7 @@ CREATE TABLE IF NOT EXISTS `provinsi` (
 
 -- Dumping data for table jasatitip.provinsi: ~33 rows (approximately)
 /*!40000 ALTER TABLE `provinsi` DISABLE KEYS */;
-REPLACE INTO `provinsi` (`id_provinsi`, `nama_provinsi`) VALUES
+INSERT IGNORE INTO `provinsi` (`id_provinsi`, `nama_provinsi`) VALUES
 	(1, 'ACEH'),
 	(6728, 'SUMATERA UTARA'),
 	(12920, 'SUMATERA BARAT'),
@@ -88786,6 +88788,7 @@ REPLACE INTO `provinsi` (`id_provinsi`, `nama_provinsi`) VALUES
 /*!40000 ALTER TABLE `provinsi` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.rekening_bank
+DROP TABLE IF EXISTS `rekening_bank`;
 CREATE TABLE IF NOT EXISTS `rekening_bank` (
   `id_rekening` int(11) NOT NULL AUTO_INCREMENT,
   `nama_bank` varchar(255) NOT NULL,
@@ -88797,12 +88800,13 @@ CREATE TABLE IF NOT EXISTS `rekening_bank` (
 
 -- Dumping data for table jasatitip.rekening_bank: ~2 rows (approximately)
 /*!40000 ALTER TABLE `rekening_bank` DISABLE KEYS */;
-REPLACE INTO `rekening_bank` (`id_rekening`, `nama_bank`, `cabang`, `atas_nama`, `no_rekening`) VALUES
+INSERT IGNORE INTO `rekening_bank` (`id_rekening`, `nama_bank`, `cabang`, `atas_nama`, `no_rekening`) VALUES
 	(1, 'Bank BCA', 'Sukabumi', 'Mathin Mochammad', '11805462'),
 	(2, 'Bank BRI', 'Cisaat', 'Nurul Rahayu', '84215132');
 /*!40000 ALTER TABLE `rekening_bank` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.slider
+DROP TABLE IF EXISTS `slider`;
 CREATE TABLE IF NOT EXISTS `slider` (
   `id_slider` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `judul` varchar(50) NOT NULL,
@@ -88814,13 +88818,14 @@ CREATE TABLE IF NOT EXISTS `slider` (
 
 -- Dumping data for table jasatitip.slider: ~3 rows (approximately)
 /*!40000 ALTER TABLE `slider` DISABLE KEYS */;
-REPLACE INTO `slider` (`id_slider`, `judul`, `caption`, `gambar`, `url`) VALUES
+INSERT IGNORE INTO `slider` (`id_slider`, `judul`, `caption`, `gambar`, `url`) VALUES
 	(3, 'Spring Bed Terbaru', 'Ganti Kasur Anda Dengan Spring Bed agar tidur lebih nyenyak', 'slide-02.jpg', 'https://stackoverflow.com/questions/34691191/codeigniter-form-validation-with-image-upload'),
 	(4, 'Koleksi Sofa Terbaru', 'Hiasi Rumah mu Dengan Sofa Keluaran Terbaru', 'slide-01.jpg', 'http://jasatitip.test/administrator/tambah_gambar_slider'),
 	(5, 'Alat Dapur', 'Tambah Koleksi Alat Dapur Anda', 'slide-03.jpg', '-');
 /*!40000 ALTER TABLE `slider` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_alamat_kirim
+DROP TABLE IF EXISTS `tb_alamat_kirim`;
 CREATE TABLE IF NOT EXISTS `tb_alamat_kirim` (
   `id_alamat` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `kecamatan_id` int(10) unsigned NOT NULL,
@@ -88832,14 +88837,15 @@ CREATE TABLE IF NOT EXISTS `tb_alamat_kirim` (
   PRIMARY KEY (`id_alamat`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_alamat_kirim: ~1 rows (approximately)
+-- Dumping data for table jasatitip.tb_alamat_kirim: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tb_alamat_kirim` DISABLE KEYS */;
-REPLACE INTO `tb_alamat_kirim` (`id_alamat`, `kecamatan_id`, `nama_alamat`, `nama_penerima`, `nomor_penerima`, `alamat_lengkap`, `kode_pos`) VALUES
+INSERT IGNORE INTO `tb_alamat_kirim` (`id_alamat`, `kecamatan_id`, `nama_alamat`, `nama_penerima`, `nomor_penerima`, `alamat_lengkap`, `kode_pos`) VALUES
 	(2, 26869, 'Alamat Rumah', 'Anggi Permata Sary', '085861771511', 'Kp Cikaroya RT/RT 17/03 Ds.Gunungjaya ', 43152),
 	(3, 26883, 'Kantor', 'Syafaat', '129301230913', 'SMP Kadudampit', 43153);
 /*!40000 ALTER TABLE `tb_alamat_kirim` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_kategori
+DROP TABLE IF EXISTS `tb_kategori`;
 CREATE TABLE IF NOT EXISTS `tb_kategori` (
   `id_kategori` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nama_kategori` varchar(255) NOT NULL,
@@ -88848,13 +88854,14 @@ CREATE TABLE IF NOT EXISTS `tb_kategori` (
 
 -- Dumping data for table jasatitip.tb_kategori: ~3 rows (approximately)
 /*!40000 ALTER TABLE `tb_kategori` DISABLE KEYS */;
-REPLACE INTO `tb_kategori` (`id_kategori`, `nama_kategori`) VALUES
+INSERT IGNORE INTO `tb_kategori` (`id_kategori`, `nama_kategori`) VALUES
 	(1, 'Alat Dapur'),
 	(2, 'Furniture'),
 	(3, 'Elektronik');
 /*!40000 ALTER TABLE `tb_kategori` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_konfirmasi_transfer
+DROP TABLE IF EXISTS `tb_konfirmasi_transfer`;
 CREATE TABLE IF NOT EXISTS `tb_konfirmasi_transfer` (
   `id_konfirmasi` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `kode_transaksi` varchar(255) NOT NULL DEFAULT '0',
@@ -88869,9 +88876,9 @@ CREATE TABLE IF NOT EXISTS `tb_konfirmasi_transfer` (
   PRIMARY KEY (`id_konfirmasi`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_konfirmasi_transfer: ~6 rows (approximately)
+-- Dumping data for table jasatitip.tb_konfirmasi_transfer: ~7 rows (approximately)
 /*!40000 ALTER TABLE `tb_konfirmasi_transfer` DISABLE KEYS */;
-REPLACE INTO `tb_konfirmasi_transfer` (`id_konfirmasi`, `kode_transaksi`, `nama_pengirim`, `bank_pengirim`, `rekening_pengirim`, `rekening_tujuan`, `jumlah_transfer`, `status`, `waktu_konfirmasi`, `bukti_transfer`) VALUES
+INSERT IGNORE INTO `tb_konfirmasi_transfer` (`id_konfirmasi`, `kode_transaksi`, `nama_pengirim`, `bank_pengirim`, `rekening_pengirim`, `rekening_tujuan`, `jumlah_transfer`, `status`, `waktu_konfirmasi`, `bukti_transfer`) VALUES
 	(4, 'TRX-29062018-000001', 'Mathin', 'BNI', '21238291038', 'Bank BCA - 11805462', '5519072', 'N', '2018-06-30 14:12:07', '84587d81f0215f9a2c2b780099c653c1.jpg'),
 	(5, 'TRX-29062018-000001', 'Mathin', 'BNI', '21238291038', 'Bank BRI - 84215132', '5519072', 'N', '2018-06-30 14:14:31', '5aa8d4d854866173f0501ac2a5974d57.jpg'),
 	(6, 'TRX-29062018-000001', 'Mathin', 'BNI', '21238291038', 'Bank BCA - 11805462', '5519072', 'N', '2018-06-30 14:15:20', NULL),
@@ -88882,6 +88889,7 @@ REPLACE INTO `tb_konfirmasi_transfer` (`id_konfirmasi`, `kode_transaksi`, `nama_
 /*!40000 ALTER TABLE `tb_konfirmasi_transfer` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_ongkir
+DROP TABLE IF EXISTS `tb_ongkir`;
 CREATE TABLE IF NOT EXISTS `tb_ongkir` (
   `id_ongkir` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `kecamatan_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -88889,9 +88897,9 @@ CREATE TABLE IF NOT EXISTS `tb_ongkir` (
   PRIMARY KEY (`id_ongkir`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_ongkir: ~2 rows (approximately)
+-- Dumping data for table jasatitip.tb_ongkir: ~5 rows (approximately)
 /*!40000 ALTER TABLE `tb_ongkir` DISABLE KEYS */;
-REPLACE INTO `tb_ongkir` (`id_ongkir`, `kecamatan_id`, `biaya`) VALUES
+INSERT IGNORE INTO `tb_ongkir` (`id_ongkir`, `kecamatan_id`, `biaya`) VALUES
 	(1, 26869, '8000'),
 	(2, 32158, '5000'),
 	(3, 26883, '10000'),
@@ -88900,6 +88908,7 @@ REPLACE INTO `tb_ongkir` (`id_ongkir`, `kecamatan_id`, `biaya`) VALUES
 /*!40000 ALTER TABLE `tb_ongkir` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_pemesanan
+DROP TABLE IF EXISTS `tb_pemesanan`;
 CREATE TABLE IF NOT EXISTS `tb_pemesanan` (
   `id_pemesanan` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -88916,7 +88925,7 @@ CREATE TABLE IF NOT EXISTS `tb_pemesanan` (
 
 -- Dumping data for table jasatitip.tb_pemesanan: ~5 rows (approximately)
 /*!40000 ALTER TABLE `tb_pemesanan` DISABLE KEYS */;
-REPLACE INTO `tb_pemesanan` (`id_pemesanan`, `user_id`, `alamat_id`, `kode_transaksi`, `total_ongkir`, `total_harga`, `tanggal`, `status`, `kode_unik`) VALUES
+INSERT IGNORE INTO `tb_pemesanan` (`id_pemesanan`, `user_id`, `alamat_id`, `kode_transaksi`, `total_ongkir`, `total_harga`, `tanggal`, `status`, `kode_unik`) VALUES
 	(2, 15, 2, 'TRX-29062018-000001', '120000', '5399000', '2018-06-29', 'Dalam Proses', 72),
 	(3, 15, 2, 'TRX-30062018-000001', '696000', '13038000', '2018-06-30', 'Belum Dibayar', 361),
 	(4, 15, 3, 'TRX-03072018-000001', '140000', '680000', '2018-07-03', 'Belum Dibayar', 268),
@@ -88925,6 +88934,7 @@ REPLACE INTO `tb_pemesanan` (`id_pemesanan`, `user_id`, `alamat_id`, `kode_trans
 /*!40000 ALTER TABLE `tb_pemesanan` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_pemesanan_detail
+DROP TABLE IF EXISTS `tb_pemesanan_detail`;
 CREATE TABLE IF NOT EXISTS `tb_pemesanan_detail` (
   `id_pemesanan_detail` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pemesanan_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -88934,9 +88944,9 @@ CREATE TABLE IF NOT EXISTS `tb_pemesanan_detail` (
   PRIMARY KEY (`id_pemesanan_detail`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_pemesanan_detail: ~7 rows (approximately)
+-- Dumping data for table jasatitip.tb_pemesanan_detail: ~8 rows (approximately)
 /*!40000 ALTER TABLE `tb_pemesanan_detail` DISABLE KEYS */;
-REPLACE INTO `tb_pemesanan_detail` (`id_pemesanan_detail`, `pemesanan_id`, `produk_id`, `harga`, `qty`) VALUES
+INSERT IGNORE INTO `tb_pemesanan_detail` (`id_pemesanan_detail`, `pemesanan_id`, `produk_id`, `harga`, `qty`) VALUES
 	(1, 2, 6, '5399000', 1),
 	(2, 3, 6, '5399000', 2),
 	(3, 3, 1, '1900000', 1),
@@ -88948,6 +88958,7 @@ REPLACE INTO `tb_pemesanan_detail` (`id_pemesanan_detail`, `pemesanan_id`, `prod
 /*!40000 ALTER TABLE `tb_pemesanan_detail` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_produk
+DROP TABLE IF EXISTS `tb_produk`;
 CREATE TABLE IF NOT EXISTS `tb_produk` (
   `id_produk` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `kategori_id` int(10) unsigned NOT NULL,
@@ -88967,13 +88978,14 @@ CREATE TABLE IF NOT EXISTS `tb_produk` (
 
 -- Dumping data for table jasatitip.tb_produk: ~3 rows (approximately)
 /*!40000 ALTER TABLE `tb_produk` DISABLE KEYS */;
-REPLACE INTO `tb_produk` (`id_produk`, `kategori_id`, `kode_produk`, `status_produk`, `nama_produk`, `harga`, `berat`, `deskripsi`, `gambar_1`, `gambar_2`, `gambar_3`, `seo`) VALUES
+INSERT IGNORE INTO `tb_produk` (`id_produk`, `kategori_id`, `kode_produk`, `status_produk`, `nama_produk`, `harga`, `berat`, `deskripsi`, `gambar_1`, `gambar_2`, `gambar_3`, `seo`) VALUES
 	(1, 2, 'LMRANK001', 'Stok Tersedia', 'Lemari Anak Hello Kitty', '1900000', '20000', 'Lemari pakaian anak dengan motif karakter Hello Kitty,berwarna pink yang pastinya disukai anak\r\nTerdiri atas 2 pintu dengan bukaan sliding, sisi pertama merupakan lemari gantung baju dan sisi lainnya terdapat area lipat yang dilengkapi laci\r\nUkuran : 120x53x192 ', '7324478_fe44f443-45fa-42c5-bb0d-e78b797d4d76.jpg', NULL, NULL, NULL),
 	(6, 1, 'MJMKN001', 'Stok Tersedia', 'Set Meja Makan Neo Hera Dengan 4 Kursi - Hitam', '5399000', '15000', 'Meja Makan Cuy', '10040547_51.JPG', NULL, NULL, NULL),
 	(7, 2, 'FUR001', 'Stok Tersedia', 'Kursi staff kantor oscar polos', '340000', '7000', '#stock terlarisss\r\nKursi staff kantor\r\nbahan oscar/kain polos warna hitam.\r\nbarang second refurbish berkualitas.\r\nmudah dibersihkan & awet.\r\nhydrolik lancar kaki roda mulus. ', '1516949_9766910f-c14c-4d47-be64-544fd9e35538.jpg', NULL, NULL, NULL);
 /*!40000 ALTER TABLE `tb_produk` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_users
+DROP TABLE IF EXISTS `tb_users`;
 CREATE TABLE IF NOT EXISTS `tb_users` (
   `id_user` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
@@ -88990,14 +89002,15 @@ CREATE TABLE IF NOT EXISTS `tb_users` (
 
 -- Dumping data for table jasatitip.tb_users: ~4 rows (approximately)
 /*!40000 ALTER TABLE `tb_users` DISABLE KEYS */;
-REPLACE INTO `tb_users` (`id_user`, `email`, `nama_lengkap`, `username`, `password`, `role`, `aktif`, `waktu_daftar`) VALUES
-	(1, 'admin@jastip.test', 'Admin', 'admin', '$2y$11$zRxaDeTqRo/BcVHyzkWLCeQdoiP8ZXAJoBI/LWVLlIZejtDq3L9ze', 'administrator', 'Y', '2018-07-02 12:07:46'),
+INSERT IGNORE INTO `tb_users` (`id_user`, `email`, `nama_lengkap`, `username`, `password`, `role`, `aktif`, `waktu_daftar`) VALUES
+	(1, 'admin@jastip.test', 'Admin', 'admin', '$2y$11$qmhrhhVO/3UrWgBAFpd5nOhs.hQD2N3BYu40B8kn6dPIsf36BrkIC', 'administrator', 'Y', '2018-07-02 12:07:46'),
 	(15, 'simdig.tb@gmail.com', 'Anggi Permata', 'anggi', '$2y$11$4x5Kuk1ASkss.apkcbT0M.X40KojMSUa9tlm3TpUycMlyguLupgui', 'pelanggan', 'Y', '2018-07-02 12:07:46'),
 	(16, 'acengpilek@ueo.com', 'Aceng Pilek', 'aceng', '$2y$11$d.qKQ8eM6t7TZjH1A.s/ROmmcgKxnAbdckLeD4KRq5BZ8jmPgHveu', 'pelanggan', 'Y', '2018-07-05 11:18:42'),
 	(18, 'nurulandroid@gmail.com', 'Nurul Rahayu', 'billy', '$2y$11$7O9ANvgw/RN/rkNW.p.K1uJy6sSl4TLpzhOO/ZB6TgETH2QjhFrp6', 'administrator', 'Y', '2018-07-07 13:34:53');
 /*!40000 ALTER TABLE `tb_users` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_user_alamat
+DROP TABLE IF EXISTS `tb_user_alamat`;
 CREATE TABLE IF NOT EXISTS `tb_user_alamat` (
   `id_user_alamat` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) unsigned NOT NULL,
@@ -89007,7 +89020,7 @@ CREATE TABLE IF NOT EXISTS `tb_user_alamat` (
 
 -- Dumping data for table jasatitip.tb_user_alamat: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tb_user_alamat` DISABLE KEYS */;
-REPLACE INTO `tb_user_alamat` (`id_user_alamat`, `user_id`, `alamat_id`) VALUES
+INSERT IGNORE INTO `tb_user_alamat` (`id_user_alamat`, `user_id`, `alamat_id`) VALUES
 	(1, 15, 2),
 	(2, 15, 3);
 /*!40000 ALTER TABLE `tb_user_alamat` ENABLE KEYS */;
