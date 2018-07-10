@@ -37,7 +37,7 @@
                                 <?php echo form_error('nama_penerima') ?>
                             </div>
                             <div class="form-group">
-                                <label for="">Nama Penerima</label>
+                                <label for="">Nomor Penerima</label>
                                 <input type="text" name="nomor_penerima" class="required form-control" placeholder="Tulis Nomor Hp Penerima" autofocus=""  minlength='5' onkeyup="nospaces(this)" value="<?php echo isset($alamat['nomor_penerima']) ? $alamat['nomor_penerima'] : '' ?>">
                                 <?php echo form_error('nomor_penerima') ?>
                             </div>

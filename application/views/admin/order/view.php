@@ -10,7 +10,7 @@
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item"><a href="#">Pesanan</a></li>
-            <li class="breadcrumb-item"><a href="#">Pesanan Masuk</a></li>
+            <li class="breadcrumb-item"><?php echo $title ?></li>
           </ol>
         </div>
       </div>
@@ -70,6 +70,21 @@
 
 <script>
   var table;
+  function konfirmasi_kirim(id_pemesanan, kode_transaksi) {
+        swal({
+            title: 'Konfirmasi Pengiriman Untuk Transaksi '+kode_transaksi+' ?',
+            text: "Status Pemesanan Akan Menjadi Dikirim !",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: 'green',
+            confirmButtonText: 'Konfirmasi !',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.value) {
+                window.location.href="<?php echo base_url() ?>administrator/konfirmasi_kirim/"+id_pemesanan
+            }
+        })
+      }
   $(document).ready(function() {
 
       //datatables
@@ -110,5 +125,6 @@
 
       });
 
+      
   });
 </script>

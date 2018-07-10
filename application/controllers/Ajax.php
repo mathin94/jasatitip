@@ -172,7 +172,7 @@ class Ajax extends CI_Controller {
             $row[] = $field->nama_kabupaten;
             $row[] = $field->nama_kecamatan;
             $row[] = 'Rp. ' . number_format($field->biaya);
-            $row[] = '<a href="'.site_url('administrator/edit_ongkir/'.$field->id_ongkir).'"><i class="fa fa-edit"></i></a> <a href="#" onclick="delete_ongkir('.$field->id_ongkir.',"'.$field->nama_kecamatan.'")"><i class="fa fa-trash"></i></a>';
+            $row[] = '<a href="'.site_url('administrator/edit_ongkir/'.$field->id_ongkir).'"><i class="fa fa-edit"></i></a> <a href="#" onclick="delete_ongkir('.$field->id_ongkir.',\''.$field->nama_kecamatan.'\')"><i class="fa fa-trash"></i></a>';
  
             $data[] = $row;
         }
@@ -276,7 +276,7 @@ class Ajax extends CI_Controller {
 
         	if ($field->status == 'Dalam Proses') 
         	{
-        		$action = '<a href="'.base_url('administrator/konfirmasi_kirim/'.$field->kode_transaksi).'"> Konfirmasi Kirim</a>';
+        		$action = '<a href="#" onclick="konfirmasi_kirim('.$field->id_pemesanan.',\''.$field->kode_transaksi.'\')"> Konfirmasi Kirim</a>';
         	}
 
             $no++;

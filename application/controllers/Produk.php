@@ -169,7 +169,10 @@ class Produk extends CI_Controller
                             <span class="mtext-106 cl2">
                                 Rp. '.number_format($row['harga']).'
                             </span>
-
+                            <p></p>
+                            <span class="stext-106 cl2">
+                                Berat : ' . ($row['berat']/1000) . ' Kg
+                            </span>
                             <p class="stext-102 cl3 p-t-23">
                                 '.$row['deskripsi'].'
                             </p>

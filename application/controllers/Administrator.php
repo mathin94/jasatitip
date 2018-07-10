@@ -1133,7 +1133,7 @@ class Administrator extends CI_Controller {
 		redirect('administrator/data_order');
 	}
 
-	public function konfirmasi_pengiriman()
+	public function konfirmasi_kirim()
 	{
 		allowed('administrator');
 		$this->load->model('Pemesanan_model', 'order');

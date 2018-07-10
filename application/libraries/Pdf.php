@@ -11,7 +11,7 @@
  * @license        MIT License
  * @link        https://github.com/ardianta/codeigniter-dompdf
  */
-use Dompdf\Dompdf;
+use \Dompdf\Dompdf;
 class Pdf extends Dompdf{
     /**
      * PDF filename
