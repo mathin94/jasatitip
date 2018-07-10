@@ -18,6 +18,58 @@ class Produk_model extends CI_Model
         parent::__construct();
     }
 
+    public function get_produk($number, $offset, $filter = NULL)
+    {
+        $this->db->from($this->table);
+        $this->db->join('tb_kategori', 'tb_kategori.id_kategori = tb_produk.kategori_id');
+
+        if($filter != NULL)
+        {
+            $no = 1;
+            foreach ($filter as $key => $value) {
+                if ($no>1) 
+                {
+                    $this->db->or_where($key, $value);
+                }
+                else
+                {
+                    $this->db->where($key, $value);
+                }
+                
+                $no++;
+            }
+        }
+        $this->db->order_by('id_produk', 'desc');
+        $this->db->limit($number, $offset);
+
+        return $this->db->get()->result();
+    }
+
+    public function search($q, $number, $offset)
+    {  
+        $this->db->from($this->table);
+        $this->db->join('tb_kategori', 'tb_kategori.id_kategori = tb_produk.kategori_id');
+
+        if($q != NULL)
+        {
+            $this->db->like('nama_produk', $q);
+        }
+
+        $this->db->order_by('id_produk', 'desc');
+        $this->db->limit($number, $offset);
+
+        return $this->db->get()->result();
+    }
+
+    public function get_produk_terbaru()
+    {
+        $this->db->from($this->table);
+        $this->db->join('tb_kategori', 'tb_kategori.id_kategori = tb_produk.kategori_id');
+        $this->db->order_by('id_produk', 'desc');
+        $this->db->limit(8);
+        return $this->db->get()->result();
+    }
+
     public function get_data($config, $page = 0, $id_kategori = NULL, $q = NULL)
     {  
         $this->db->from($this->table);
@@ -38,14 +90,7 @@ class Produk_model extends CI_Model
         return $this->db->get();
     }
 
-    public function search($q, $config, $page)
-    {  
-        $this->db->from($this->table);
-        $this->db->join('tb_kategori', 'tb_kategori.id_kategori = tb_produk.kategori_id');
-        $this->db->like('nama_produk', $q);
-        $this->db->limit($config['per_page'], $page);
-        return $this->db->get();
-    }
+    
 
     // get all
     function get_all()
@@ -160,9 +205,18 @@ class Produk_model extends CI_Model
         return $query->num_rows();
     }
  
-    public function count_all()
+    public function count_all($kategori_id = 0, $q = null)
     {
         $this->db->from($this->table);
+        if ($q != null) 
+        {
+            $this->db->like('nama_produk', $q);
+        }
+
+        if ($kategori_id != 0) 
+        {
+            $this->db->where('kategori_id', $kategori_id);
+        }
         return $this->db->count_all_results();
     }
 

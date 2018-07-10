@@ -37,5 +37,9 @@
         </div> 
         <?php endforeach ?>
     </div>
+    <!-- Load more -->
+    <div class="flex-c-m flex-w w-full p-t-45">
+      <?php echo $this->pagination->create_links() ?>
+    </div>
   </div>
 </div>

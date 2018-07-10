@@ -16,21 +16,15 @@ class Produk extends CI_Controller
 
     public function index()
     {
-        //konfigurasi pagination
+        $jumlah_data = $this->produk->count_all();
+        
         $config['base_url'] = site_url('produk/index'); //site url
-        
-        
-        $config['per_page'] = 8;  //show record per halaman
-        $config['total_rows'] = $this->db->count_all('tb_produk'); //total row
-        $config["uri_segment"] = 3;  // uri parameter
-        $choice = $config["total_rows"] / $config["per_page"];
-        $config["num_links"] = floor($choice);
- 
-        // Membuat Style pagination untuk BootStrap v4
-        $config['first_link']       = 'First';
-        $config['last_link']        = 'Last';
-        $config['next_link']        = 'Next';
-        $config['prev_link']        = 'Prev';
+        $config['total_rows'] = $jumlah_data;
+        $config['per_page'] = 8;
+        $config['first_link']       = 'Pertama';
+        $config['last_link']        = 'Terakhir';
+        $config['next_link']        = 'Selanjutnya';
+        $config['prev_link']        = 'Sebelumnya';
         $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
         $config['full_tag_close']   = '</ul></nav></div>';
         $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
@@ -40,39 +34,70 @@ class Produk extends CI_Controller
         $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
         $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
         $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['prev_tagl_close']  = '</span>Next</li>';
+        $config['prev_tagl_close']  = '</span>Selanjutnya</li>';
         $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
         $config['first_tagl_close'] = '</span></li>';
         $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
         $config['last_tagl_close']  = '</span></li>';
+        
+        $from = $this->uri->segment(4);
+        $this->pagination->initialize($config); 
 
-        $this->pagination->initialize($config);
-
-        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $data['produk_data'] = $this->produk->get_data($config, $this->uri->segment(3), NULL)->result(); 
-        //panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
-                  
- 
-        $data['pagination'] = $this->pagination->create_links();
-        $data['title'] = 'Semua Produk ';
+        $data['title'] = 'Semua Produk';
         $data['kategori_produk'] = 'Semua Produk';
+        $data['produk_data'] = $this->produk->get_produk($config['per_page'], $from);
+        $data['kategori_produk'] = 'Semua Produk';
+        $this->template->load('front','produk/daftar_produk', $data);
+    }
+
+    public function kategori($id)
+    {
+        $kat = $this->kategori->get_one($id);
+        $jumlah_data = $this->produk->count_all($id);
+
+        $config['base_url']         = site_url('produk/kategori/'.$id); //site url
+        $config['total_rows']       = $jumlah_data;
+        $config['per_page']         = 8;
+        $config['first_link']       = 'Pertama';
+        $config['last_link']        = 'Terakhir';
+        $config['next_link']        = 'Selanjutnya';
+        $config['prev_link']        = 'Sebelumnya';
+        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
+        $config['full_tag_close']   = '</ul></nav></div>';
+        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
+        $config['num_tag_close']    = '</span></li>';
+        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
+        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
+        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
+        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['prev_tagl_close']  = '</span>Selanjutnya</li>';
+        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
+        $config['first_tagl_close'] = '</span></li>';
+        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
+        $config['last_tagl_close']  = '</span></li>';
+        $from = $this->uri->segment(4);
+        $this->pagination->initialize($config); 
+
+        $data['title'] = 'Produk Kategori ' . $kat['nama_kategori'];
+        $data['kategori_produk'] = $kat['nama_kategori'];
+        $data['produk_data'] = $this->produk->get_produk($config['per_page'], $from, array('kategori_id'=>$kat['id_kategori']));
         $this->template->load('front','produk/daftar_produk', $data);
     }
 
     public function search()
     {
-        $keyword = $this->input->get('keyword');
-        $config['per_page'] = 8;  //show record per halaman
-        $config['total_rows'] = $this->db->count_all('tb_produk'); //total row
-        $config["uri_segment"] = 3;  // uri parameter
-        $choice = $config["total_rows"] / $config["per_page"];
-        $config["num_links"] = floor($choice);
- 
-        // Membuat Style pagination untuk BootStrap v4
-        $config['first_link']       = 'First';
-        $config['last_link']        = 'Last';
-        $config['next_link']        = 'Next';
-        $config['prev_link']        = 'Prev';
+        $keyword    = $this->input->get('keyword');
+
+        $jumlah_data= $this->produk->count_all(0,$keyword);
+
+        $config['base_url']         = site_url('produk/?search='.$keyword); //site url
+        $config['total_rows']       = $jumlah_data;
+        $config['per_page']         = 8;
+        $config['first_link']       = 'Pertama';
+        $config['last_link']        = 'Terakhir';
+        $config['next_link']        = 'Selanjutnya';
+        $config['prev_link']        = 'Sebelumnya';
         $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
         $config['full_tag_close']   = '</ul></nav></div>';
         $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
@@ -82,18 +107,15 @@ class Produk extends CI_Controller
         $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
         $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
         $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['prev_tagl_close']  = '</span>Next</li>';
+        $config['prev_tagl_close']  = '</span>Selanjutnya</li>';
         $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
         $config['first_tagl_close'] = '</span></li>';
         $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
         $config['last_tagl_close']  = '</span></li>';
-
+        $from = $this->uri->segment(4);
         $this->pagination->initialize($config);
 
-        $data['page'] = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
-        $data['produk_data'] = $this->produk->search($keyword, $config, $data['page'])->result(); 
- 
-        $data['pagination'] = $this->pagination->create_links();
+        $data['produk_data'] = $this->produk->search($keyword, $config['per_page'], $from); 
         $data['keyword'] = $keyword;
         $data['title'] = 'Hasil Pencarian Produk ' . $keyword;
         $this->template->load('front', 'produk/hasil_cari', $data);
@@ -179,52 +201,7 @@ class Produk extends CI_Controller
         }
     }
 
-    public function kategori($id)
-    {
-        $kat = $this->kategori->get_one($id);
-        
-        //konfigurasi pagination
-        $config['base_url'] = site_url('produk/kategori/'.$id); //site url
-        
-        
-        $config['per_page'] = 8;  //show record per halaman
-        $config['total_rows'] = $this->produk->total_rows($id); //total row
-        $config["uri_segment"] = 3;  // uri parameter
-        $choice = $config["total_rows"] / $config["per_page"];
-        $config["num_links"] = floor($choice);
- 
-        // Membuat Style pagination untuk BootStrap v4
-        $config['first_link']       = 'First';
-        $config['last_link']        = 'Last';
-        $config['next_link']        = 'Next';
-        $config['prev_link']        = 'Prev';
-        $config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination justify-content-center">';
-        $config['full_tag_close']   = '</ul></nav></div>';
-        $config['num_tag_open']     = '<li class="page-item"><span class="page-link">';
-        $config['num_tag_close']    = '</span></li>';
-        $config['cur_tag_open']     = '<li class="page-item active"><span class="page-link">';
-        $config['cur_tag_close']    = '<span class="sr-only">(current)</span></span></li>';
-        $config['next_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['next_tagl_close']  = '<span aria-hidden="true">&raquo;</span></span></li>';
-        $config['prev_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['prev_tagl_close']  = '</span>Next</li>';
-        $config['first_tag_open']   = '<li class="page-item"><span class="page-link">';
-        $config['first_tagl_close'] = '</span></li>';
-        $config['last_tag_open']    = '<li class="page-item"><span class="page-link">';
-        $config['last_tagl_close']  = '</span></li>';
-
-        $this->pagination->initialize($config);
-
-        $data['page'] = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
-        $data['produk_data'] = $this->produk->get_data($config, $this->uri->segment(4), $id)->result(); 
-        //panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
-                  
- 
-        $data['pagination'] = $this->pagination->create_links();
-        $data['title'] = 'Kategori ' . $kat['nama_kategori'];
-        $data['kategori_produk'] = $kat['nama_kategori'];
-        $this->template->load('front','produk/daftar_produk', $data);
-    }
+    
 
     public function json_produk()
     {
