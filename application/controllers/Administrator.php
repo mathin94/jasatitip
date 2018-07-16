@@ -866,11 +866,6 @@ class Administrator extends CI_Controller {
             	$hasil3=$this->upload->data();
 
             $config = array(
-		    	array(
-        			'field' => 'status_produk',
-					'label'	=> 'Status Produk',
-					'rules'	=> 'required'
-        		),
         		array(
         			'field' => 'kategori_id',
 					'label'	=> 'Kategori Produk',
@@ -916,7 +911,6 @@ class Administrator extends CI_Controller {
             	$data = array(
             		'kategori_id'		=> $post['kategori_id'],
             		'kode_produk'		=> $post['kode_produk'],
-            		'status_produk'		=> $post['status_produk'],
             		'nama_produk'		=> $post['nama_produk'],
             		'harga'				=> $post['harga'],
             		'berat'				=> $post['berat'],
@@ -983,11 +977,6 @@ class Administrator extends CI_Controller {
             $prod = $this->produk->get_by_id($id);
 
             $config = array(
-		    	array(
-        			'field' => 'status_produk',
-					'label'	=> 'Status Produk',
-					'rules'	=> 'required'
-        		),
         		array(
         			'field' => 'kategori_id',
 					'label'	=> 'Kategori Produk',
@@ -1022,7 +1011,7 @@ class Administrator extends CI_Controller {
 		    if ($this->form_validation->run() == FALSE)
             {
             	$data = array(
-            		'title'		=> 'Edit Data Produk ' . $data['produk']['nama_produk'],
+            		'title'		=> 'Edit Data Produk ',
             		'produk'	=> $post,
             		'url_action'=> site_url('administrator/edit_produk/'.$id)
             	);
@@ -1036,7 +1025,6 @@ class Administrator extends CI_Controller {
             	$data = array(
             		'kategori_id'		=> $post['kategori_id'],
             		'kode_produk'		=> $post['kode_produk'],
-            		'status_produk'		=> $post['status_produk'],
             		'nama_produk'		=> $post['nama_produk'],
             		'harga'				=> $post['harga'],
             		'berat'				=> $post['berat'],
@@ -1062,7 +1050,7 @@ class Administrator extends CI_Controller {
 		{
 			$prod = $this->produk->get_by_id($id);
 			$data = array(
-				'title'		=> 'Edit Data Produk ' . $prod['nama_produk'],
+				'title'		=> 'Edit Data Produk ',
 				'produk'	=> $prod,
 				'url_action'=> site_url('administrator/edit_produk/'.$id)
 			);
@@ -1451,27 +1439,25 @@ class Administrator extends CI_Controller {
 	public function cetak_laporan()
 	{
 		allowed('administrator');
-		$this->load->library('pdf');
+		$this->load->library('Pdfgenerator');
 		$this->load->helper('tanggal');
 		$this->load->model('Pemesanan_model', 'order');
 
-		$tgl_awal = $this->input->get('start_date');
-		$tgl_akhir = $this->input->get('end_date');
-		$order = $this->order->get_data_range($tgl_awal, $tgl_akhir);
-		$total_earn = $this->order->total_data_range($tgl_awal, $tgl_akhir);
-		$data = array(
-			'title'	=> 'Laporan Transaksi Periode ',
-			'order'	=> $order,
-			'tgl_awal' => date_indo($tgl_awal),
+		$tgl_awal 		= $this->input->get('start_date');
+		$tgl_akhir 		= $this->input->get('end_date');
+		$order 			= $this->order->get_data_range($tgl_awal, $tgl_akhir);
+		$total_earn 	= $this->order->total_data_range($tgl_awal, $tgl_akhir);
+		
+		$data 			= array(
+			'order'		=> $order,
+			'tgl_awal' 	=> date_indo($tgl_awal),
 			'tgl_akhir' => date_indo($tgl_akhir),
 			'total'		=> $total_earn
 		);
 
-
-		$this->pdf->setPaper('A4', 'potrait');
-	    $this->pdf->filename = "Laporan-Penjualan-".$tgl_awal."-to-".$tgl_akhir.".pdf";
-
-	    $this->pdf->load_view('admin/report/view_pdf', $data);
+		$nama = "Laporan-Penjualan-".$tgl_awal."-to-".$tgl_akhir;
+		$html = $this->load->view('admin/report/view_pdf', $data, true);
+		$this->pdfgenerator->generate($html, $nama, true, 'A4', 'portrait');
 
 	}
 

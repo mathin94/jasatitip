@@ -65,7 +65,7 @@ class Pemesanan extends CI_Controller {
 		allowed('pelanggan');
 		$id = $this->uri->segment(3);
 
-		$this->load->library('pdf');
+		$this->load->library('Pdfgenerator');
 		$this->load->helper('tanggal');
 
 		$pemesanan = $this->order->get_pemesanan_one($id);
@@ -79,10 +79,9 @@ class Pemesanan extends CI_Controller {
 			'totber'		=> $this->total_berat($id),
 			'detail_pesanan'=> $this->order->get_detail($id)
 		);
-
-		$this->pdf->setPaper('A4', 'potrait');
-	    $this->pdf->filename = "invoice-".$pemesanan['kode_transaksi'].".pdf";
-	    $this->pdf->load_view('pemesanan/invoice_pdf', $data);
+		$nama = "invoice-".$pemesanan['kode_transaksi'];
+		$html = $this->load->view('pemesanan/invoice_pdf', $data, true);
+		$this->pdfgenerator->generate($html, $nama, true, 'A4', 'portrait');
 	}
 
 	public function invoice($id)

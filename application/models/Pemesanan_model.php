@@ -261,7 +261,7 @@ class Pemesanan_model extends CI_Model {
         $total = 0;
         
         foreach ($data as $row) {
-            $total += $row->total_ongkir+$row->total_harga+$row->total_ongkir;
+            $total += ($row->total_ongkir+$row->total_harga+$row->kode_unik);
         }
 
         return $total;

@@ -74,11 +74,6 @@
                     <?php echo form_error('kategori_id') ?>
                   </div>
                   <div class="form-group">
-                    <label for="varchar">Status Produk</label>
-                    <?php echo combo_status(isset($produk['status_produk']) ? $produk['status_produk'] : '') ?>
-                    <?php echo form_error('status_produk') ?>
-                  </div>
-                  <div class="form-group">
                     <label for="harga">Harga</label>
                     <input type="text" class="form-control" name="harga" id="harga" placeholder="Harga" value="<?php echo isset($produk['harga']) ? $produk['harga'] : '' ?>" />
                     <?php echo form_error('harga') ?>
