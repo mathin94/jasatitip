@@ -57,9 +57,7 @@
                       <td width="10px" style="text-align:center"><?php echo ++$start ?></td>
                       <td><?php echo $row->nama_kategori ?></td>
                       <td style="text-align:center" width="100px">
-                        <?php 
-                        echo anchor(site_url('administrator/delete_kategori_produk/'.$row->id_kategori),'<i class="fa fa-trash"></i> Hapus','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
-                        ?>
+                        <a href="#" onclick="delete_kategori(<?php echo $row->id_kategori ?>,'<?php echo $row->nama_kategori ?>')" title=""><i class="fa fa-trash"></i> Hapus</a>
                       </td>
                     </tr>
                     <?php
@@ -77,3 +75,22 @@
       <!-- /.content -->
     </div>
 <!-- /.content-wrapper -->
+
+
+<script>
+  function delete_kategori(id, nama) {
+    swal({
+        title: 'Hapus Kategori '+nama+' ?',
+        text: "Hapus Kategori Dapat Dilakukan jika tidak ada produk yang menggunakan kategori ini !",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'red',
+        confirmButtonText: 'Hapus !',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.value) {
+            window.location.href="<?php echo base_url() ?>administrator/delete_kategori_produk/"+id
+        }
+    })
+  }
+</script>

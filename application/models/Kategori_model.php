@@ -34,7 +34,15 @@ class Kategori_model extends CI_Model {
 	{
 		$this->db->from($this->table);
 		$this->db->where($this->table.'.'.$field, $value);
-		return $this->db->get()->result();
+		$data = $this->db->get();
+
+		if ($data->num_rows()>0) {
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 
 	public function insert($data)

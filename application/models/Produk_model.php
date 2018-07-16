@@ -109,6 +109,22 @@ class Produk_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get()->row_array();
     }
+
+    public function is_kategori_exist($kategori_id) 
+    {
+        $this->db->from($this->table);
+        $this->db->join('tb_kategori', 'tb_kategori.id_kategori = tb_produk.kategori_id');
+        $this->db->where('kategori_id', $kategori_id);
+
+        if ($this->db->get()->num_rows()>0) 
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
     
     
 

@@ -816,10 +816,20 @@ class Administrator extends CI_Controller {
 	{
 		allowed('administrator');
 		$this->load->model('Kategori_model', 'kategori');
+		$this->load->model('Produk_model', 'produk');
 		$id = $this->uri->segment(3);
-		$this->kategori->delete($id);
-		$this->session->set_flashdata('notifikasi', '<script>notifikasi("Kategori Telah Dihapus", "success", "fa fa-check")</script>');
-		redirect('administrator/kategori_produk');
+		$cek = $this->produk->is_kategori_exist($id);
+		if ($cek == FALSE) 
+		{
+			$this->kategori->delete($id);
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi("Kategori Telah Dihapus", "success", "fa fa-check")</script>');
+			redirect('administrator/kategori_produk');
+		}
+		else 
+		{
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi("Kategori Gagal Dihapus Karena Ada Produk yang menggunakan kategori ini", "danger", "fa fa-exclamation")</script>');
+			redirect('administrator/kategori_produk');
+		}
 	}
 
 // End Kategori Produk
