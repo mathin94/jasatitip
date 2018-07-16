@@ -221,7 +221,7 @@ class Produk extends CI_Controller
             $row[] = $field->nama_kategori;
             $row[] = 'Rp. ' . number_format($field->harga);
             $row[] = ceil($field->berat/1000) . ' Kg';
-            $row[] = '<a href="'.site_url('administrator/edit_produk/'.$field->id_produk).'"><i class="fa fa-edit"></i></a> <a href="#" onclick="delete_produk('.$field->id_produk.',"'.$field->nama_produk.'")"><i class="fa fa-trash"></i></a>';
+            $row[] = '<a href="'.site_url('administrator/edit_produk/'.$field->id_produk).'"><i class="fa fa-edit"></i></a> <a href="#" onclick="delete_produk('.$field->id_produk.',\''.$field->nama_produk.'\')"><i class="fa fa-trash"></i></a>';
  
             $data[] = $row;
         }
