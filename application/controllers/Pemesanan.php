@@ -34,7 +34,7 @@ class Pemesanan extends CI_Controller {
             $row[] = $no;
             $row[] = $field->kode_transaksi;
             $row[] = tanggal_indo($field->tanggal);
-            $row[] = 'Rp. ' . number_format($field->total_harga+$field->total_ongkir+$field->kode_unik);
+            $row[] = 'Rp. ' . number_format($field->total_harga+$field->total_ongkir+$field->total_fee+$field->kode_unik);
             $row[] = $field->status;
             $action = '';
             if ($field->status == 'Belum Dibayar' || $field->status == 'Menunggu Konfirmasi') 
@@ -81,7 +81,7 @@ class Pemesanan extends CI_Controller {
 		);
 		$nama = "invoice-".$pemesanan['kode_transaksi'];
 		$html = $this->load->view('pemesanan/invoice_pdf', $data, true);
-		$this->pdfgenerator->generate($html, $nama, true, 'A4', 'portrait');
+		$this->pdfgenerator->generate($html, $nama, true, 'A4', 'landscape');
 	}
 
 	public function invoice($id)

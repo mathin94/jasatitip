@@ -116,7 +116,7 @@ class Pemesanan_model extends CI_Model {
 
 	public function get_detail($id)
 	{
-		$this->db->select('pemesanan_id, tb_pemesanan_detail.harga as harga_produk, qty, berat, nama_produk');
+		$this->db->select('pemesanan_id,tb_pemesanan_detail.fee_jastip as fee_jastip, tb_pemesanan_detail.harga as harga_produk, qty, berat, nama_produk');
 		$this->db->from('tb_pemesanan_detail');
 		$this->db->join('tb_produk', 'tb_produk.id_produk = tb_pemesanan_detail.produk_id');
 		$this->db->where('pemesanan_id', $id);

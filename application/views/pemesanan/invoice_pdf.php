@@ -41,6 +41,7 @@
                             <tr>
                                 <td><strong>Nama Produk</strong></td>
                                 <td class="text-center"><strong>Harga</strong></td>
+                                <td class="text-center"><strong>Biaya Jasa (Per PCS)</strong></td>
                                 <td class="text-center"><strong>Jumlah</strong></td>
                                 <td class="text-right"><strong>Total</strong></td>
                             </tr>
@@ -50,11 +51,13 @@
                                 <tr>
                                     <td><?php echo $items->nama_produk ?></td>
                                     <td class="text-center"><?php echo 'Rp. ' . number_format($items->harga_produk) ?></td>
+                                    <td class="text-center"><?php echo 'Rp. ' . number_format($items->fee_jastip) ?></td>
                                     <td class="text-center"><?php echo $items->qty ?></td>
                                     <td class="text-right"><?php echo 'Rp. ' . number_format($items->harga_produk*$items->qty) ?></td>
                                 </tr>   
                             <?php endforeach ?>
                             <tr>
+                                <td class="thick-line"></td>
                                 <td class="thick-line"></td>
                                 <td class="thick-line"></td>
                                 <td class="thick-line text-center"><strong>Subtotal</strong></td>
@@ -63,14 +66,23 @@
                             <tr>
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
+                                <td class="no-line"></td>
+                                <td class="no-line text-center"><strong>Biaya Jasa Total</strong></td>
+                                <td class="no-line text-right"><?php echo 'Rp. ' . number_format($pemesanan['total_fee']) ?></td>
+                            </tr>
+                            <tr>
+                                <td class="no-line"></td>
+                                <td class="no-line"></td>
+                                <td class="no-line"></td>
                                 <td class="no-line text-center"><strong>Biaya Kirim ( <?php echo $totber . ' Kg ' ?>)</strong></td>
                                 <td class="no-line text-right"><?php echo 'Rp. ' . number_format($pemesanan['total_ongkir']) ?></td>
                             </tr>
                             <tr>
                                 <td class="no-line"></td>
                                 <td class="no-line"></td>
+                                <td class="no-line"></td>
                                 <td class="no-line text-center"><strong>Total Pembayaran</strong></td>
-                                <td class="no-line text-right"><?php echo 'Rp. ' . number_format($pemesanan['total_harga']+$pemesanan['total_ongkir']) ?></td>
+                                <td class="no-line text-right"><?php echo 'Rp. ' . number_format($pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['total_fee']+$pemesanan['kode_unik']) ?></td>
                             </tr>
                         </tbody>
                     </table>
