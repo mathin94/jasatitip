@@ -202,7 +202,7 @@ class Ajax extends CI_Controller {
             $row[] = $field->email;
             $row[] = $field->username;
             $row[] = $field->tanggal;
-            $row[] = 'Rp. ' . number_format($field->total_harga+$field->total_ongkir+$field->kode_unik);
+            $row[] = 'Rp. ' . number_format($field->total_harga+$field->total_ongkir+$field->total_fee+$field->kode_unik);
  
             $data[] = $row;
         }
@@ -242,7 +242,7 @@ class Ajax extends CI_Controller {
             $row[] = $no;
             $row[] = $field->kode_transaksi;
             $row[] = $field->email;
-            $row[] = 'Rp. ' . number_format($field->total_harga+$field->total_ongkir+$field->kode_unik);
+            $row[] = 'Rp. ' . number_format($field->total_harga+$field->total_ongkir+$field->total_fee+$field->kode_unik);
             $row[] = $field->status;
             $row[] = $action;
  
@@ -284,7 +284,7 @@ class Ajax extends CI_Controller {
             $row[] = $no;
             $row[] = $field->kode_transaksi;
             $row[] = $field->email;
-            $row[] = 'Rp. ' . number_format($field->total_harga+$field->total_ongkir+$field->kode_unik);
+            $row[] = 'Rp. ' . number_format($field->total_harga+$field->total_ongkir+$field->total_fee+$field->kode_unik);
             $row[] = $field->status;
             $row[] = $action;
  

@@ -78,7 +78,10 @@
 					<span class="stext-106 cl2">
 						Berat : <?php echo format_berat($produk['berat']) ?>
 					</span>
-
+					<p></p>
+					<span class="stext-106 cl2">
+						Biaya Jasa : <?php echo format_rupiah($produk['fee_jastip']) ?> per barang
+					</span>
 					<p class="stext-102 cl3 p-t-23">
 						<?php echo $produk['deskripsi'] ?>
 					</p>
@@ -98,7 +101,7 @@
 								</div>
 							</div>
 
-							<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" id="btn-addcart" data-idproduk="<?php echo $produk['id_produk'] ?>" data-hargaproduk="<?php echo $produk['harga'] ?>" data-namaproduk="<?php echo $produk['nama_produk'] ?>" data-beratproduk="<?php echo $produk['berat'] ?>" data-gambarproduk="<?php echo $produk['gambar_1'] ?>">
+							<button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" id="btn-addcart" data-idproduk="<?php echo $produk['id_produk'] ?>" data-hargaproduk="<?php echo $produk['harga'] ?>" data-fee="<?php echo $produk['fee_jastip'] ?>" data-namaproduk="<?php echo $produk['nama_produk'] ?>" data-beratproduk="<?php echo $produk['berat'] ?>" data-gambarproduk="<?php echo $produk['gambar_1'] ?>">
 								Tambahkan Ke Keranjang
 							</button>
 						</div>
@@ -182,6 +185,7 @@
 			var produk_id     = $(this).data("idproduk");
             var produk_nama   = $(this).data("namaproduk");
             var produk_harga  = $(this).data("hargaproduk");
+            var produk_fee    = $(this).data("fee");
             var produk_gambar = $(this).data("gambarproduk");
             var produk_berat  = $(this).data("beratproduk");
             var quantity      = $('#produk_qty').val();
@@ -192,6 +196,7 @@
                 	id_produk: produk_id, 
                 	nama_produk: produk_nama, 
                 	harga: produk_harga, 
+                	fee: produk_fee, 
                 	gambar: produk_gambar, 
                 	berat: produk_berat, 
                 	qty: quantity

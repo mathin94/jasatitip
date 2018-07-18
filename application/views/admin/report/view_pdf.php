@@ -53,7 +53,7 @@
                                 <td class="text-center"><?php echo $row->email ?></td>
                                 <td class="text-center"><?php echo $row->username ?></td>
                                 <td class="text-center"><?php echo date_indo($row->tanggal) ?></td>
-                                <td class="text-right"><?php echo format_rupiah($row->total_harga+$row->total_ongkir+$row->kode_unik) ?></td>
+                                <td class="text-right"><?php echo format_rupiah($row->total_harga+$row->total_ongkir+$row->total_fee+$row->kode_unik) ?></td>
                             </tr>    
                         <?php endforeach ?>
                         <tr>

@@ -165,6 +165,10 @@ class Produk extends CI_Controller
                             <span class="stext-106 cl2">
                                 Berat : ' . ($row['berat']/1000) . ' Kg
                             </span>
+                            <p></p>
+                            <span class="stext-106 cl2">
+                                Biaya Jasa : Rp. '.number_format($row['fee_jastip']).' per Barang
+                            </span>
                             <p class="stext-102 cl3 p-t-23">
                                 '.$row['deskripsi'].'
                             </p>
@@ -183,7 +187,7 @@ class Produk extends CI_Controller
                                             </div>
                                         </div>
 
-                                        <button onclick="add_cart($(this))" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" id="btn-addcart" data-idproduk="'.$row['id_produk'].'" data-hargaproduk="'.$row['harga'].'" data-namaproduk="'.$row['nama_produk'].'" data-beratproduk="'.$row['berat'].'" data-gambarproduk="'.$row['gambar_1'].'">
+                                        <button onclick="add_cart($(this))" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail" id="btn-addcart" data-idproduk="'.$row['id_produk'].'" data-hargaproduk="'.$row['harga'].'" data-fee="'.$row['fee_jastip'].'" data-namaproduk="'.$row['nama_produk'].'" data-beratproduk="'.$row['berat'].'" data-gambarproduk="'.$row['gambar_1'].'">
                                             Tambahkan Ke Keranjang
                                         </button>
                                     </div>
@@ -212,6 +216,7 @@ class Produk extends CI_Controller
             $row[] = $field->nama_produk;
             $row[] = $field->nama_kategori;
             $row[] = 'Rp. ' . number_format($field->harga);
+            $row[] = 'Rp. ' . number_format($field->fee_jastip);
             $row[] = ceil($field->berat/1000) . ' Kg';
             $row[] = '<a href="'.site_url('administrator/edit_produk/'.$field->id_produk).'"><i class="fa fa-edit"></i></a> <a href="#" onclick="delete_produk('.$field->id_produk.',\''.$field->nama_produk.'\')"><i class="fa fa-trash"></i></a>';
  

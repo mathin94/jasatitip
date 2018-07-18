@@ -897,6 +897,11 @@ class Administrator extends CI_Controller {
 					'rules'	=> 'required|numeric|greater_than[100]'
         		),
         		array(
+        			'field' => 'fee',
+					'label'	=> 'Biaya Jasa',
+					'rules'	=> 'required|numeric|greater_than[100]'
+        		),
+        		array(
         			'field' => 'berat',
 					'label'	=> 'Berat',
 					'rules'	=> 'required|numeric'
@@ -923,6 +928,7 @@ class Administrator extends CI_Controller {
             		'kode_produk'		=> $post['kode_produk'],
             		'nama_produk'		=> $post['nama_produk'],
             		'harga'				=> $post['harga'],
+            		'fee_jastip'		=> $post['fee'],
             		'berat'				=> $post['berat'],
             		'deskripsi'			=> $post['deskripsi'],
             	);
@@ -1003,6 +1009,11 @@ class Administrator extends CI_Controller {
 					'rules'	=> 'required|numeric|greater_than[100]'
         		),
         		array(
+        			'field' => 'fee',
+					'label'	=> 'Biaya Jasa',
+					'rules'	=> 'required|numeric|greater_than[100]'
+        		),
+        		array(
         			'field' => 'berat',
 					'label'	=> 'Berat',
 					'rules'	=> 'required|numeric'
@@ -1037,6 +1048,7 @@ class Administrator extends CI_Controller {
             		'kode_produk'		=> $post['kode_produk'],
             		'nama_produk'		=> $post['nama_produk'],
             		'harga'				=> $post['harga'],
+            		'fee_jastip'		=> $post['fee'],
             		'berat'				=> $post['berat'],
             		'deskripsi'			=> $post['deskripsi'],
             	);

@@ -51,7 +51,8 @@
                     <th>Foto Produk</th>
                     <th>Nama Produk</th>
                     <th>Kategori</th>
-                    <th>Harga</th>
+                    <th width="100">Harga</th>
+                    <th width="100">Fee Titip</th>
                     <th>Berat</th>
                     <th style="text-align:center">Action</th>
                   </tr>

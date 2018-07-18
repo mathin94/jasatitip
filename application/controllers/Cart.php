@@ -29,7 +29,8 @@ class Cart extends CI_Controller {
 					'cart'	=> $cart,
 					'alamat'=> $alamat,
 					'users' => $users,
-					'total' => $this->cart->total()
+					'total' => $this->cart->total(),
+					'totaljasa'=>$this->total_fee()
 
 				);
 
@@ -60,6 +61,7 @@ class Cart extends CI_Controller {
 				'alamat_id'		=> $post['id_alamat'],
 				'total_harga'	=> $post['total_harga'],
 				'total_ongkir'	=> $post['total_ongkir'],
+				'total_fee'		=> $post['total_fee'],
 				'kode_transaksi'=> $this->Pemesanan_model->autokode(),
 				'tanggal'		=> date('Y-m-d'),
 				'status'		=> 'Belum Dibayar'
@@ -68,6 +70,7 @@ class Cart extends CI_Controller {
 			$data = array(
 				'cart'	=> $cart,
 				'trans'	=> $trans,
+				'totaljasa'=> $this->total_fee(),
 				'title'	=> 'Konfirmasi Checkout',
 				'no'	=> 1,
 				'totber'=> $this->total_berat(),
@@ -89,6 +92,7 @@ class Cart extends CI_Controller {
 			'alamat_id'		=> $post['id_alamat'],
 			'total_harga'	=> $post['total_harga'],
 			'total_ongkir'	=> $post['total_ongkir'],
+			'total_fee'		=> $post['total_fee'],
 			'kode_transaksi'=> $this->Pemesanan_model->autokode(),
 			'tanggal'		=> date('Y-m-d'),
 			'status'		=> 'Belum Dibayar',
@@ -105,17 +109,12 @@ class Cart extends CI_Controller {
 
 	public function pembayaran()
 	{
-		if ($this->session->flashdata('id_order')) 
-		{
-			
-		}
-
 		$pemesanan = $this->Pemesanan_model->get_pemesanan_one(2);
 		$data = array(
 			'title'		=> 'Rincian Pembayaran',
 			'total'		=> 'Rp. ' . number_format($pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['kode_unik']),
 			'kode_transaksi'=> $pemesanan['kode_transaksi'],
-			'totalbayar'	=> $pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['kode_unik']
+			'totalbayar'	=> $pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['total_fee']+$pemesanan['kode_unik']
 		);
 
 		
@@ -244,7 +243,8 @@ class Cart extends CI_Controller {
 					'qty'			=> $this->input->post('qty'),
 					'options'		=> array(
 						'gambar'	=> site_url().'assets/foto_produk/'.$this->input->post('gambar'),
-						'berat'		=> ($this->input->post('berat'))
+						'berat'		=> ($this->input->post('berat')),
+						'fee'		=> ($this->input->post('fee')),
 					)
 				);
 
@@ -327,6 +327,7 @@ class Cart extends CI_Controller {
 
 		$this->cart->update($data);
 		$biaya = 0;
+		$fee   = 0;
 		$kecamatan_id = $this->input->post('kecamatan_id');
 		
 		if ($kecamatan_id != '') 
@@ -338,9 +339,12 @@ class Cart extends CI_Controller {
 		$item = $this->cart->get_item($this->input->post('rowid'));
 		$row = array(
 			'total'			=> 'Rp. ' . number_format($item['price']*$item['qty']),
+			'totalfee'		=> 'Rp. ' . number_format($item['options']['fee']*$item['qty']),
 			'subtotal'		=> 'Rp. ' . number_format($this->cart->total()),
 			'grandtotal'	=> 'Rp. ' . number_format($this->cart->total()+$biaya),
 			'ongkir'		=> 'Rp. ' . number_format($biaya),
+			'feejastip'		=> 'Rp. ' . number_format($this->total_fee()),
+			'_fee'			=> $this->total_fee(),
 			'_ongkir'		=> $biaya,
 			'_subtotal'		=> $this->cart->total()
 		);
@@ -358,6 +362,17 @@ class Cart extends CI_Controller {
 		$berat = ceil($berat/1000);
 
 		return $berat;
+	}
+
+	public function total_fee()
+	{
+		$items = $this->cart->contents();
+		$fee = 0;
+		foreach ($items as $item) {
+			$fee += $item['qty']*$item['options']['fee'];
+		}
+
+		return $fee;
 	}
 
 	public function total_pembelian_cart()

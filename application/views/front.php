@@ -367,6 +367,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
             var produk_harga  = getdata.data("hargaproduk");
             var produk_gambar = getdata.data("gambarproduk");
             var produk_berat  = getdata.data("beratproduk");
+            var produk_fee    = getdata.data("fee");
             var quantity      = $('#produk_qty').val();
 
             $.ajax({
@@ -376,7 +377,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 	id_produk: produk_id, 
                 	nama_produk: produk_nama, 
                 	harga: produk_harga, 
-                	gambar: produk_gambar, 
+                	gambar: produk_gambar,
+                	fee: produk_fee,  
                 	berat: produk_berat, 
                 	qty: quantity
                 },

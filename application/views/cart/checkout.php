@@ -75,6 +75,7 @@
 								<tr>
 									<td><strong>Nama Produk</strong></td>
 									<td class="text-center"><strong>Harga</strong></td>
+									<td class="text-center"><strong>Biaya Jasa (Per PCS)</strong></td>
 									<td class="text-center"><strong>Jumlah</strong></td>
 									<td class="text-right"><strong>Total</strong></td>
 								</tr>
@@ -84,11 +85,13 @@
 									<tr>
 										<td><?php echo $items['name'] ?></td>
 										<td class="text-center"><?php echo 'Rp. ' . number_format($items['price']) ?></td>
+										<td class="text-center"><?php echo 'Rp. ' . number_format($items['options']['fee']) ?></td>
 										<td class="text-center"><?php echo $items['qty'] ?></td>
 										<td class="text-right"><?php echo 'Rp. ' . number_format($items['price']*$items['qty']) ?></td>
 									</tr>	
 								<?php endforeach ?>
 								<tr>
+									<td class="thick-line"></td>
 									<td class="thick-line"></td>
 									<td class="thick-line"></td>
 									<td class="thick-line text-center"><strong>Subtotal</strong></td>
@@ -97,10 +100,19 @@
 								<tr>
 									<td class="no-line"></td>
 									<td class="no-line"></td>
+									<td class="no-line"></td>
+									<td class="no-line text-center"><strong>Biaya Jasa Total</strong></td>
+									<td class="no-line text-right"><?php echo 'Rp. ' . number_format($totaljasa) ?></td>
+								</tr>
+								<tr>
+									<td class="no-line"></td>
+									<td class="no-line"></td>
+									<td class="no-line"></td>
 									<td class="no-line text-center"><strong>Biaya Kirim ( <?php echo $totber . ' Kg ' ?>)</strong></td>
 									<td class="no-line text-right"><?php echo 'Rp. ' . number_format($trans['total_ongkir']) ?></td>
 								</tr>
 								<tr>
+									<td class="no-line"></td>
 									<td class="no-line"></td>
 									<td class="no-line"></td>
 									<td class="no-line text-center"><strong>Total Harga</strong></td>
@@ -128,6 +140,7 @@
 			<input type="text" name="total_ongkir" id="total_ongkir" value="<?php echo $trans['total_ongkir'] ?>">
 			<input type="text" name="total_harga" id="total_harga" value="<?php echo $trans['total_harga'] ?>">
 			<input type="text" name="id_alamat" id="id_alamat" value="<?php echo $trans['alamat_id'] ?>">
+			<input type="text" name="total_fee" id="total_fee" value="<?php echo $totaljasa?>">
 			<input type="text" name="id_user" id="id_user" value="<?php echo $trans['user_id'] ?>">
 		</div>
 	</div>
@@ -137,6 +150,7 @@ $(document).ready(function() {
 	$(".konfirmasi").click(function() {
 		var ongkir 		= $("#total_ongkir").val();
 		var subtotal 	= $("#total_harga").val();
+		var feejastip	= $("#total_fee").val();
 		var id_user 	= $("#id_user").val();
 		var id_alamat 	= $("#id_alamat").val();
 

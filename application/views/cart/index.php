@@ -1,4 +1,8 @@
 <!-- breadcrumb -->
+
+<?php  
+// var_dump($this->cart->contents()); die;
+?>
 <div class="container">
 	<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
 		<a href="<?php echo base_url() ?>" class="stext-109 cl8 hov-cl1 trans-04">
@@ -48,9 +52,14 @@
 									</div>
 								</td>
 								<td class="column-5"><?php echo 'Rp. '. number_format($items['price']*$items['qty']) ?></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td colspan="2">Biaya Jasa : <?php echo format_rupiah($items['options']['fee']) ?> / PCS</td>
+								<td colspan="2">Total Biaya Jasa : <span class="feesubtotal"><?php echo format_rupiah($items['options']['fee']*$items['qty']) ?></span></td>
+							</tr>
 							<?php endforeach ?>
 							
-							</tr>
 
 						</table>
 					</div>
@@ -134,6 +143,20 @@
 							<input type="hidden" class="ongkirval" value="0">
 						</div>
 
+						<div class="flex-w flex-t bor12 p-b-13">
+							<div class="size-208">
+								<span class="stext-110 cl2">
+									Total Biaya Jasa:
+								</span>
+							</div>
+							<div class="size-209">
+								<span class="stext-110 cl2 feejastip">
+									<?php echo format_rupiah($totaljasa) ?>
+								</span>
+							</div>
+							<input type="hidden" class="ongkirval" value="0">
+						</div>
+
 						<div class="flex-w flex-t p-t-27 p-b-33">
 							<div class="size-208">
 								<span class="mtext-101 cl2">
@@ -161,6 +184,7 @@
 				<input type="text" name="id_user" id="id_user" value="<?php echo $users['id_user'] ?>">
 				<input type="text" name="total_ongkir" id="total_ongkir">
 				<input type="text" name="total_harga" id="total_harga" value="<?php echo $this->cart->total() ?>">
+				<input type="text" name="total_fee" id="total_fee" value="<?php echo $totaljasa?>">
 				<input type="text" name="id_alamat" id="id_alamat">
 			</div>
 		</div>
@@ -169,11 +193,12 @@
 $(document).ready(function() {
 	$(".cekot").click(function() {
 		var ongkir 		= $("#total_ongkir").val();
+		var feejastip	= $("#total_fee").val();
 		var subtotal 	= $("#total_harga").val();
 		var id_user 	= $("#id_user").val();
 		var id_alamat 	= $("#id_alamat").val();
 
-		if (ongkir == 0 || subtotal == 0 || id_user == 0 || id_user == 1 || id_alamat == 0) {
+		if (ongkir == 0 || feejastip == 0 || subtotal == 0 || id_user == 0 || id_user == 1 || id_alamat == 0) {
 			swal({
 			  type: 'error',
 			  title: 'Gagal Checkout...',
@@ -198,10 +223,13 @@ $(document).ready(function() {
 			},
 			success: function(data){
 				_elemen.closest('td').next().html(data.total);
+				_elemen.closest('tr').next().find('.feesubtotal').html(data.totalfee);
                 $('.subtotal').html(data.subtotal);
                 $('.ongkir').html(data.ongkir);
+                $('.feejastip').html(data.feejastip);
                 $('#total_ongkir').val(data._ongkir);
                 $('#total_harga').val(data._subtotal);
+                $('#total_fee').val(data._fee);
                 $('.totalakhir').html(data.grandtotal);
                 show_cart();
             }

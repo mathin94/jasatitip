@@ -50,7 +50,7 @@ class Pemesanan_model extends CI_Model {
     public function total_pemesanan_baru()
     {
     	$this->db->from('tb_pemesanan');
-    	$this->db->where('status', 'Menuggu Konfirmasi');
+    	$this->db->where('status', 'Menunggu Konfirmasi');
     	return $this->db->get()->num_rows();
     }
 
@@ -65,13 +65,12 @@ class Pemesanan_model extends CI_Model {
 			{
 				$this->db->insert('tb_pemesanan_detail', array(
 					'produk_id'		=> $item['id'],
-					'harga'			=> $item['price'],
+                    'harga'         => $item['price'],
+					'fee_jastip'	=> $item['options']['fee'],
 					'qty'			=> $item['qty'],
 					'pemesanan_id'	=> $id_order
 				));
 			}
-
-			$this->session->set_flashdata('id_order', $id_order);
 		}
 	}
 
@@ -261,7 +260,7 @@ class Pemesanan_model extends CI_Model {
         $total = 0;
         
         foreach ($data as $row) {
-            $total += ($row->total_ongkir+$row->total_harga+$row->kode_unik);
+            $total += ($row->total_ongkir+$row->total_harga+$row->total_fee+$row->kode_unik);
         }
 
         return $total;

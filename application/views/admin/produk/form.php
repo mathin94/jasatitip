@@ -75,12 +75,17 @@
                   </div>
                   <div class="form-group">
                     <label for="harga">Harga</label>
-                    <input type="text" class="form-control" name="harga" id="harga" placeholder="Harga" value="<?php echo isset($produk['harga']) ? $produk['harga'] : '' ?>" />
+                    <input type="text" class="form-control" name="harga" id="harga" placeholder="Harga Produk" value="<?php echo isset($produk['harga']) ? $produk['harga'] : '' ?>" />
                     <?php echo form_error('harga') ?>
                   </div>
                   <div class="form-group">
+                    <label for="harga">Fee Jasa Titip</label>
+                    <input type="text" class="form-control" name="fee" id="fee" placeholder="Biaya Jasa Titipan" value="<?php echo isset($produk['fee_jastip']) ? $produk['fee_jastip'] : '' ?>" />
+                    <?php echo form_error('fee') ?>
+                  </div>
+                  <div class="form-group">
                     <label for="berat">Berat</label>
-                    <input type="text" class="form-control" name="berat" id="berat" placeholder="Berat" value="<?php echo isset($produk['berat']) ? $produk['berat'] : '' ?>" />
+                    <input type="text" class="form-control" name="berat" id="berat" placeholder="Isi Berat Produk (Satuan Gram)" value="<?php echo isset($produk['berat']) ? $produk['berat'] : '' ?>" />
                     <?php echo form_error('berat') ?>
                   </div>
                   <div class="form-group">
