@@ -100,31 +100,16 @@ class Administrator extends CI_Controller {
             		'biaya'			=> $post['biaya']
             	);
 
-            	$insert = $this->ongkir->insert($data);
-            	if ($insert) 
-            	{
-            		$this->session->set_flashdata('notifikasi', '<script>
-						notifikasi(
-						  "Ongkir Berhasil Di Input!",
-						  "success",
-						  "fa fa-check"
-						)
-            		</script>');
+            	$this->ongkir->insert($data);
+            	$this->session->set_flashdata('notifikasi', '<script>
+					notifikasi(
+					  "Ongkir Berhasil Di Input!",
+					  "success",
+					  "fa fa-check"
+					)
+        		</script>');
 
-            		redirect('administrator/ongkir');
-            	}
-            	else
-            	{
-            		$this->session->set_flashdata('notifikasi', '<script>
-						notifikasi(
-						  "Ongkir Gagal Di Input!",
-						  "danger",
-						  "fa fa-exclamation"
-						)
-            		</script>');
-
-            		redirect('administrator/ongkir');
-            	}
+        		redirect('administrator/ongkir');
             }
 		}
 		else
