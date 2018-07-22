@@ -1,17 +1,20 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 use Carbon\Carbon;
-Carbon::setLocale('id');
+
 
 class Pemesanan extends CI_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
+		setlocale(LC_TIME, 'Indonesia');
+		Carbon::setLocale('id');
 		$this->load->model('Pemesanan_model', 'order');
 		$this->load->model('Users_model');
 		$this->load->library('form_validation');
 		allowed('pelanggan');
+
 	}
 
 	public function index()
