@@ -166,7 +166,7 @@
 
 							<div class="size-209 p-t-1">
 								<span class="mtext-110 cl2 totalakhir">
-									<?php echo 'Rp. ' . number_format($this->cart->total()) ?>
+									<?php echo 'Rp. ' . number_format($this->cart->total()+$totaljasa) ?>
 								</span>
 
 							</div>

@@ -343,7 +343,7 @@ class Cart extends CI_Controller {
 			'total'			=> 'Rp. ' . number_format($item['price']*$item['qty']),
 			'totalfee'		=> 'Rp. ' . number_format($item['options']['fee']*$item['qty']),
 			'subtotal'		=> 'Rp. ' . number_format($this->cart->total()),
-			'grandtotal'	=> 'Rp. ' . number_format($this->cart->total()+$biaya),
+			'grandtotal'	=> 'Rp. ' . number_format($this->cart->total()+$biaya+$this->total_fee()),
 			'ongkir'		=> 'Rp. ' . number_format($biaya),
 			'feejastip'		=> 'Rp. ' . number_format($this->total_fee()),
 			'_fee'			=> $this->total_fee(),
