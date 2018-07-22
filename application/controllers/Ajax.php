@@ -224,6 +224,7 @@ class Ajax extends CI_Controller {
 
         $data = array();
         $no = $_POST['start'];
+        
         foreach ($list as $field) {
         	$action = '';
 
@@ -276,7 +277,7 @@ class Ajax extends CI_Controller {
 
         	if ($field->status == 'Dalam Proses') 
         	{
-        		$action = '<a href="#" onclick="konfirmasi_kirim('.$field->id_pemesanan.',\''.$field->kode_transaksi.'\')"> Konfirmasi Kirim</a>';
+        		$action = '<a href="'.site_url('administrator/konfirmasi_kirim/'.$field->id_pemesanan).'"> Konfirmasi Kirim</a>';
         	}
 
             $no++;

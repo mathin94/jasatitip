@@ -56,6 +56,8 @@ class Cart extends CI_Controller {
 		{
 			$post 			= $this->input->post();
 			$cart 			= $this->cart->contents();
+			$alamat 		= $this->Alamat_model->get_alamat_lengkap($post['id_alamat']);
+			$ongkir 		= $this->Ongkir_model->get_by_kecamatanid($alamat['kecamatan_id']);
 			$trans = array(
 				'user_id'		=> $post['id_user'],
 				'alamat_id'		=> $post['id_alamat'],
@@ -68,14 +70,15 @@ class Cart extends CI_Controller {
 			);
 
 			$data = array(
-				'cart'	=> $cart,
-				'trans'	=> $trans,
-				'totaljasa'=> $this->total_fee(),
-				'title'	=> 'Konfirmasi Checkout',
-				'no'	=> 1,
-				'totber'=> $this->total_berat(),
-				'alamat'=> $this->Alamat_model->get_alamat_lengkap($post['id_alamat']),
-				'tanggal'=> tanggal_indo(date('Y-m-d'))
+				'cart'		=> $cart,
+				'trans'		=> $trans,
+				'totaljasa'	=> $this->total_fee(),
+				'title'		=> 'Konfirmasi Checkout',
+				'no'		=> 1,
+				'ongkir'	=> $ongkir['biaya'],
+				'totber'	=> $this->total_berat(),
+				'alamat'	=> $this->Alamat_model->get_alamat_lengkap($post['id_alamat']),
+				'tanggal'	=> tanggal_indo(date('Y-m-d'))
 			);
 
 			$this->template->load('front', 'cart/checkout', $data);
@@ -94,7 +97,6 @@ class Cart extends CI_Controller {
 			'total_ongkir'	=> $post['total_ongkir'],
 			'total_fee'		=> $post['total_fee'],
 			'kode_transaksi'=> $this->Pemesanan_model->autokode(),
-			'tanggal'		=> date('Y-m-d'),
 			'status'		=> 'Belum Dibayar',
 			'kode_unik'		=> $kode_unik
 		);

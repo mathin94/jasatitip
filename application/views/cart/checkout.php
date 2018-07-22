@@ -75,8 +75,10 @@
 								<tr>
 									<td><strong>Nama Produk</strong></td>
 									<td class="text-center"><strong>Harga</strong></td>
-									<td class="text-center"><strong>Biaya Jasa (Per PCS)</strong></td>
+									<td class="text-center"><strong>Biaya Jasa / Pcs</strong></td>
+									<td class="text-center"><strong>Berat</strong></td>
 									<td class="text-center"><strong>Jumlah</strong></td>
+									<td class="text-center"><strong>Total Ongkir</strong></td>
 									<td class="text-right"><strong>Total</strong></td>
 								</tr>
 							</thead>
@@ -86,37 +88,20 @@
 										<td><?php echo $items['name'] ?></td>
 										<td class="text-center"><?php echo 'Rp. ' . number_format($items['price']) ?></td>
 										<td class="text-center"><?php echo 'Rp. ' . number_format($items['options']['fee']) ?></td>
+										<td class="text-center"><?php echo $items['options']['berat']/1000 . ' Kg' ?></td>
 										<td class="text-center"><?php echo $items['qty'] ?></td>
-										<td class="text-right"><?php echo 'Rp. ' . number_format($items['price']*$items['qty']) ?></td>
+										<td class="text-right"><?php echo 'Rp. ' . number_format(($ongkir*(($items['options']['berat'])/1000)*$items['qty'])) ?></td>
+										<td class="text-right"><?php echo 'Rp. ' . number_format(($ongkir*(($items['options']['berat'])/1000)*$items['qty'])+($items['price']+$items['options']['fee'])*$items['qty']) ?></td>
 									</tr>	
 								<?php endforeach ?>
 								<tr>
 									<td class="thick-line"></td>
 									<td class="thick-line"></td>
 									<td class="thick-line"></td>
-									<td class="thick-line text-center"><strong>Subtotal</strong></td>
-									<td class="thick-line text-right"><?php echo 'Rp. ' . number_format($trans['total_harga']) ?></td>
-								</tr>
-								<tr>
-									<td class="no-line"></td>
-									<td class="no-line"></td>
-									<td class="no-line"></td>
-									<td class="no-line text-center"><strong>Biaya Jasa Total</strong></td>
-									<td class="no-line text-right"><?php echo 'Rp. ' . number_format($totaljasa) ?></td>
-								</tr>
-								<tr>
-									<td class="no-line"></td>
-									<td class="no-line"></td>
-									<td class="no-line"></td>
-									<td class="no-line text-center"><strong>Biaya Kirim ( <?php echo $totber . ' Kg ' ?>)</strong></td>
-									<td class="no-line text-right"><?php echo 'Rp. ' . number_format($trans['total_ongkir']) ?></td>
-								</tr>
-								<tr>
-									<td class="no-line"></td>
-									<td class="no-line"></td>
-									<td class="no-line"></td>
-									<td class="no-line text-center"><strong>Total Harga</strong></td>
-									<td class="no-line text-right"><?php echo 'Rp. ' . number_format($trans['total_harga']+$trans['total_ongkir']) ?></td>
+									<td class="thick-line"></td>
+									<td class="thick-line"></td>
+									<td class="thick-line text-center"><strong>Total Harga</strong></td>
+									<td class="thick-line text-right"><?php echo 'Rp. ' . number_format($trans['total_harga']+$trans['total_fee']+$trans['total_ongkir']) ?></td>
 								</tr>
 							</tbody>
 						</table>

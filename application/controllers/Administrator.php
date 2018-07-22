@@ -1131,11 +1131,76 @@ class Administrator extends CI_Controller {
 	public function konfirmasi_kirim()
 	{
 		allowed('administrator');
-		$this->load->model('Pemesanan_model', 'order');
-		$id = $this->uri->segment(3);
-		$this->order->konfirmasi_kirim($id);
-		$this->session->set_flashdata('notifikasi', '<script>notifikasi("Status Pemesanan Menjadi Dalam Pengiriman", "success", "fa fa-check")</script>');
-		redirect('administrator/data_order');
+		if ($this->uri->segment(3) != '') 
+		{
+			$id_pemesanan = $this->uri->segment(3);
+			$this->load->model('Pemesanan_model', 'order');
+			$this->load->model('Pengiriman_model', 'kirim');
+			$pemesanan = $this->order->get_pemesanan_one($id_pemesanan);
+			if (isset($_POST['submit'])) 
+			{
+				$config = array(
+	        		array(
+	        			'field' => 'nama_kurir',
+						'label'	=> 'Nama Kurir',
+						'rules'	=> 'required'
+	        		),
+	        		array(
+	        			'field' => 'nomor_kurir',
+						'label'	=> 'Nomor Kurir',
+						'rules'	=> 'required|numeric|min_length[11]'
+	        		)
+			    );
+
+				$post = $this->input->post();
+
+			    $this->form_validation->set_rules($config);
+
+			    if ($this->form_validation->run() == FALSE)
+	            {
+	            	$data = array(
+	            		'title'		=> 'Konfirmasi Kirim ',
+	            		'order'		=> $post
+	            	);
+
+	        		$this->template->load('back','admin/pengiriman/konfirmasi',$data);
+	            }
+	            else
+	            {
+	            	$data = array(
+	            		'nama_kurir'		=> $post['nama_kurir'],
+	            		'nomor_kurir'		=> $post['nomor_kurir'],
+	            		'pemesanan_id'		=> $this->uri->segment(3)
+	            	);
+
+					$kirim = $this->kirim->insert($data);
+					
+					if ($kirim) 
+					{
+						$this->order->konfirmasi_kirim($id_pemesanan);
+						$this->session->set_flashdata('notifikasi', '<script>notifikasi("Data Pengiriman Telah Di Input", "success", "fa fa-check")</script>');
+						redirect('administrator/data_order');
+					}
+					else
+					{
+						$this->session->set_flashdata('notifikasi', '<script>notifikasi("Terjadi Kesalahan", "danger", "fa fa-exclamation")</script>');
+						redirect('administrator/data_order');
+					}
+					
+						
+	            }
+			}
+			else
+			{
+				$data['title'] 	= 'Konfirmasi Pengiriman';
+				$data['order']	= $pemesanan;
+				$this->template->load('back', 'admin/pengiriman/konfirmasi', $data);
+			}
+		}
+		else
+		{
+			redirect('administrator','refresh');
+		}
 	}
 
 

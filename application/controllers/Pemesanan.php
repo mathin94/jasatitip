@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+use Carbon\Carbon;
+Carbon::setLocale('id');
 
 class Pemesanan extends CI_Controller {
 
@@ -21,6 +23,45 @@ class Pemesanan extends CI_Controller {
 		$this->template->load('front', 'pemesanan/index', $data);
 	}
 
+	public function status()
+	{
+		allowed('pelanggan');
+		$id = $this->uri->segment(3);
+
+		if ($id != '') 
+		{
+			$this->load->model('Pengiriman_model', 'kirim');
+
+			$detail 	= $this->kirim->get_detail($id);
+			$pengiriman = $this->kirim->get_one($id);
+			$order 		= $this->order->get_pemesanan_one($id);
+			$trackstat  = 'c0';
+
+			if ($order['status'] == 'Dalam Proses') 
+				$trackstat = 'c1';
+			elseif ($order['status'] == 'Dikirim')
+				$trackstat = 'c2';
+			elseif ($order['status'] == 'Diterima')
+				$trackstat = 'c3';
+			elseif ($order['status'] == 'Selesai')
+				$trackstat = 'c4';
+
+			$data = array(
+				'title'			=> 'Detail Pengiriman',
+				'pengiriman'	=> $pengiriman,
+				'detail'		=> $detail,
+				'pemesanan'		=> $order,
+				'trackstat'		=> $trackstat
+			);
+
+			$this->template->load('front', 'pemesanan/tracking', $data);
+		}
+		else
+		{
+			redirect(site_url(),'refresh');
+		}
+	}
+
 	public function json_pemesanan()
 	{
 		$list = $this->order->get_datatables($this->session->userdata('username'));
@@ -40,6 +81,10 @@ class Pemesanan extends CI_Controller {
             if ($field->status == 'Belum Dibayar' || $field->status == 'Menunggu Konfirmasi') 
             {
             	$action = '<a href="'.base_url('pemesanan/pembayaran/'.$field->id_pemesanan).'" class="btn btn-primary"><i class="fa fa-credit-card"></i> Bayar Tagihan</a> &nbsp';
+            }
+            else
+            {
+            	$action = '<a href="'.site_url('pemesanan/status/'.$field->id_pemesanan).'" class="btn btn-success"><i class="fa fa-truck"></i> Detail Status</a>  ';
             }
 
             $action .= '<a href="'.base_url('pemesanan/invoice/'.$field->id_pemesanan).'" class="btn btn-primary"><i class="fa fa-eye"></i> Lihat Invoice</a>';
@@ -86,20 +131,26 @@ class Pemesanan extends CI_Controller {
 
 	public function invoice($id)
 	{
-		$users = $this->Users_model->get_by_username($this->session->userdata('username'));
+		$this->load->model('Ongkir_model', 'ongkir');
+		$users 		= $this->Users_model->get_by_username($this->session->userdata('username'));
 		$id_pesanan = $this->uri->segment(3);
-
+		
 		$cekdata = $this->order->cek_pesanan($users['id_user'], $id_pesanan);
 		
 		if ($cekdata > 0) 
 		{
-			$pemesanan = $this->order->get_pemesanan_one($id_pesanan);
+			$pemesanan 	= $this->order->get_pemesanan_one($id_pesanan);
+			$ongkir 	= $this->ongkir->get_by_kecamatanid($pemesanan['kecamatan_id']);
+			$carbon 	= new Carbon($pemesanan['tanggal']);
+			$tanggal 	= $carbon->format('d F Y');
 			$data = array(
 				'title'		=> 'Rincian Pemesanan',
 				'total'		=> 'Rp. ' . number_format($pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['kode_unik']),
 				'kode_transaksi'=> $pemesanan['kode_transaksi'],
 				'totalbayar'	=> $pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['kode_unik'],
 				'pemesanan'		=> $pemesanan,
+				'tanggal' 		=> $tanggal,
+				'ongkir'		=> $ongkir['biaya'],
 				'totber'		=> $this->total_berat($id_pesanan),
 				'detail_pesanan'=> $this->order->get_detail($id_pesanan)
 			);
@@ -140,7 +191,7 @@ class Pemesanan extends CI_Controller {
 			$pemesanan = $this->order->get_pemesanan_one($id_pesanan);
 			$data = array(
 				'title'		=> 'Rincian Pembayaran',
-				'total'		=> 'Rp. ' . number_format($pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['kode_unik']),
+				'total'		=> 'Rp. ' . number_format($pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['total_fee']+$pemesanan['kode_unik']),
 				'kode_transaksi'=> $pemesanan['kode_transaksi'],
 				'totalbayar'	=> $pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['kode_unik']
 			);

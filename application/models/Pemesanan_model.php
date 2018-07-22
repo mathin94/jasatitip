@@ -19,6 +19,7 @@ class Pemesanan_model extends CI_Model {
     	$this->db->limit($limit, $start);
         return $this->db->get()->result();
     }
+    
     public function semua_transaksi($limit, $start = 0, $q = NULL) 
     {
         $this->db->from('tb_pemesanan');
@@ -92,7 +93,10 @@ class Pemesanan_model extends CI_Model {
 	public function konfirmasi($kode_transaksi)
 	{
 		$this->db->where('kode_transaksi', $kode_transaksi);
-		$this->db->update('tb_pemesanan', array('status'=>'Dalam Proses'));
+		$this->db->update('tb_pemesanan', array(
+            'status'=>'Dalam Proses',
+            'waktu_konfirmasi'=>date('Y-m-d H:i:s')
+        ));
 
 	}
 

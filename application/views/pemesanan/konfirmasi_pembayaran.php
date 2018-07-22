@@ -49,8 +49,8 @@
           </div>
           <div class="form-group">
             <label for="">Jumlah Transfer</label>
-            <input type="text" class="form-control" name="jumlah_transferx" placeholder="Nominal Transfer" value="<?php echo number_format($order['total_harga']+$order['total_ongkir']+$order['kode_unik']) ?>" readonly>
-            <input type="hidden" name="jumlah_transfer" value="<?php echo $order['total_harga']+$order['total_ongkir']+$order['kode_unik'] ?>">
+            <input type="text" class="form-control" name="jumlah_transferx" placeholder="Nominal Transfer" value="<?php echo number_format($order['total_harga']+$order['total_fee']+$order['total_ongkir']+$order['kode_unik']) ?>" readonly>
+            <input type="hidden" name="jumlah_transfer" value="<?php echo $order['total_harga']+$order['total_ongkir']+$order['total_fee']+$order['kode_unik'] ?>">
           </div>
           <div class="form-group">
             <div class="input-group input-file" name="bukti_transfer">

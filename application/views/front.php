@@ -50,7 +50,9 @@
 			<div class="top-bar">
 				<div class="content-topbar flex-sb-m h-full container">
 					<div class="left-top-bar">
-						<!-- Gratis Biaya Pengiriman untuk pembelanjaan diatas Rp.5000.000 -->
+						<?php if ($this->session->userdata('logged_in') == 'Yes'): ?>
+							Anda Login Sebagai : <?php echo $this->session->userdata('username') ?>
+						<?php endif ?>
 					</div>
 
 					<div class="right-top-bar flex-w h-full">
@@ -146,7 +148,7 @@
 					<i class="zmdi zmdi-search"></i>
 				</div>
 
-				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2">
+				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="0">
 					<i class="zmdi zmdi-shopping-cart"></i>
 				</div>
 
@@ -169,7 +171,7 @@
 			<ul class="topbar-mobile">
 				<li>
 					<div class="left-top-bar">
-						Gratis Biaya Pengiriman untuk pembelanjaan diatas Rp.5000.000
+						<!-- Gratis Biaya Pengiriman untuk pembelanjaan diatas Rp.5000.00 -->0
 					</div>
 				</li>
 
