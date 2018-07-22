@@ -286,7 +286,7 @@ class Cart extends CI_Controller {
 			'kecamatan_id'	=> $ongkir['kecamatan_id'],
 			'ongkir'		=> 'Rp. ' . number_format($biaya),
 			'_ongkir'		=> $biaya,
-			'total'			=> 'Rp. ' . number_format($this->cart->total() + $biaya)
+			'total'			=> 'Rp. ' . number_format($this->cart->total() + $biaya + $this->total_fee())
 		);
 
 		echo json_encode($data);
