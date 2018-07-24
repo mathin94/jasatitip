@@ -189,7 +189,7 @@ class Ajax extends CI_Controller {
 
     public function json_laporan()
     {
-        $list = $this->order->get_datatables(NULL, array('Dalam Proses', 'Dikirim', 'Terkirim'));
+        $list = $this->order->get_datatables(NULL, array('Dalam Proses', 'Dikirim', 'Terkirim', 'Selesai'));
 
         $data = array();
         $no = $_POST['start'];
@@ -209,8 +209,8 @@ class Ajax extends CI_Controller {
  
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->order->count_all(NULL, array('Dalam Proses','Dikirim', 'Terkirim')),
-            "recordsFiltered" => $this->order->count_filtered(NULL, array('Dalam Proses','Dikirim', 'Terkirim')),
+            "recordsTotal" => $this->order->count_all(NULL, array('Dalam Proses','Dikirim', 'Terkirim', 'Selesai')),
+            "recordsFiltered" => $this->order->count_filtered(NULL, array('Dalam Proses','Dikirim', 'Terkirim', 'Selesai')),
             "data" => $data,
         );
         //output dalam format JSON

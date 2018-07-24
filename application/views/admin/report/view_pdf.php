@@ -25,7 +25,7 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="invoice-title">
-                <h4>Laporan Transaksi Periode <?php echo $tgl_awal ?> - <?php echo $tgl_akhir ?></h4>
+                <h4>Laporan Transaksi Periode <?php echo tanggal_indo(normalize_datetime($this->input->get('start_date'), 'Y-m-d')) ?> - <?php echo tanggal_indo(normalize_datetime($this->input->get('end_date'), 'Y-m-d')) ?></h4>
                 <p><h5>Username Admin : <?php echo $this->session->userdata('username'); ?></h5></p>
                 <p><h5>Tanggal Cetak : <?php echo date_indo(date('Y-m-d')) . ' ' . date('H:i:s') ?></h5></p>
             </div>
@@ -52,7 +52,7 @@
                                 <td><?php echo $row->kode_transaksi ?></td>
                                 <td class="text-center"><?php echo $row->email ?></td>
                                 <td class="text-center"><?php echo $row->username ?></td>
-                                <td class="text-center"><?php echo date_indo($row->tanggal) ?></td>
+                                <td class="text-center"><?php echo tanggal_indo(normalize_datetime($row->tanggal, 'Y-m-d')) ?></td>
                                 <td class="text-right"><?php echo format_rupiah($row->total_harga+$row->total_ongkir+$row->total_fee+$row->kode_unik) ?></td>
                             </tr>    
                         <?php endforeach ?>

@@ -100,7 +100,7 @@
   });
 
   $("#cetak").click(function() {
-    window.open('<?php echo site_url('administrator/cetak_laporan?start_date=') ?>'+$("#periode").data('daterangepicker').startDate.format('YYYY-MM-DD')+'&end_date='+$("#periode").data('daterangepicker').endDate.format('YYYY-MM-DD'), '_blank');
+    window.open('<?php echo site_url('administrator/cetak_laporan?start_date=') ?>'+$("#periode").data('daterangepicker').startDate.format('YYYY-MM-DD H:mm:ss')+'&end_date='+$("#periode").data('daterangepicker').endDate.format('YYYY-MM-DD H:mm:ss'), '_blank');
   });
 
   var oTable;
@@ -133,8 +133,8 @@
               "url": "<?php echo site_url('ajax/json_laporan') ?>",
               "type": "POST",
               "data": function ( data ) {
-                data.start_date = $("#periode").data('daterangepicker').startDate.format('YYYY-MM-DD');
-                data.end_date = $("#periode").data('daterangepicker').endDate.format('YYYY-MM-DD');
+                data.start_date = $("#periode").data('daterangepicker').startDate.format('YYYY-MM-DD H:mm:ss');
+                data.end_date = $("#periode").data('daterangepicker').endDate.format('YYYY-MM-DD H:mm:ss');
               }
           },
           "columnDefs": [

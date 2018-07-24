@@ -6,6 +6,7 @@ class Cart extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Cart_model');
 		$this->load->model('Ongkir_model');
 		$this->load->model('Users_model');
@@ -52,6 +53,7 @@ class Cart extends CI_Controller {
 
 	public function checkout()
 	{
+
 		if (isset($_POST['id_user'])) 
 		{
 			$post 			= $this->input->post();

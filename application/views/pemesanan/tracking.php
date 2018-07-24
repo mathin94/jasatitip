@@ -47,7 +47,7 @@
 	            	<?php if ($pengiriman != NULL): ?>
 	            	<li class="list-group-item">
 	                    <span class="prefix">Tanggal Kirim :</span>
-	                    <span class="label label-success"><?php echo $pengiriman->tgl_kirim ?></span>
+	                    <span class="label label-success"><?php echo normalize_datetime($pengiriman->tgl_kirim) ?></span>
 	                </li>
 	                <li class="list-group-item">
 	                    <span class="prefix">Nama Kurir :</span>
@@ -101,18 +101,18 @@
 	            		<tr>
 	            			<td>Pesanan Dibuat</td>
 	            			<td>Pengguna Membuat Pesanan</td>
-	            			<td><?php echo $pemesanan['tanggal'] ?></td>
+	            			<td><?php echo normalize_datetime($pemesanan['tanggal']) ?></td>
 	            		</tr>
 	            		<tr>
 	            			<td>Pesanan Dikonfirmasi</td>
 	            			<td>Pesanan Di Proses Oleh Admin</td>
-	            			<td><?php echo $pemesanan['waktu_konfirmasi'] != NULL ? $pemesanan['waktu_konfirmasi'] : '' ?></td>
+	            			<td><?php echo $pemesanan['waktu_konfirmasi'] != NULL ? normalize_datetime($pemesanan['waktu_konfirmasi']) : '' ?></td>
 	            		</tr>
 	            		<?php foreach ($detail as $row): ?>
 	            		<tr>
 	            			<td><?php echo $row->status ?></td>
 	            			<td><?php echo $row->keterangan ?></td>
-	            			<td><?php echo $row->timestamp ?></td>
+	            			<td><?php echo normalize_datetime($row->timestamp) ?></td>
 	            		</tr>
 	            		<?php endforeach ?>
 	            	</tbody>

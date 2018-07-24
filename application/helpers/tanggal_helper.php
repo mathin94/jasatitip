@@ -1,5 +1,16 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-      
+    use Carbon\Carbon;
+    date_default_timezone_set("Asia/Jakarta");
+    if ( ! function_exists('normalize_datetime') ) 
+    {
+        function normalize_datetime($date, $format = 'd-m-Y H:i:s')  
+        {
+            $carbon = new Carbon($date);
+            $output = $carbon->format($format);
+            return $output;
+        }
+    }
+
     if ( ! function_exists('tgl_indo'))
     {
         function date_indo($tgl)

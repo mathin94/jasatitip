@@ -108,7 +108,6 @@
 									<td class="thick-line text-center"><strong>Total Pembayaran</strong></td>
 									<td class="thick-line text-right"><?php echo 'Rp. ' . number_format($pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['total_fee']) ?></td>
 								</tr>
-								
 							</tbody>
 						</table>
 					</div>

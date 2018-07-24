@@ -6,6 +6,7 @@ class Administrator extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Auth_model');
 		$this->load->library('form_validation');
 	}
@@ -1529,6 +1530,7 @@ class Administrator extends CI_Controller {
 
 		$nama = "Laporan-Penjualan-".$tgl_awal."-to-".$tgl_akhir;
 		$html = $this->load->view('admin/report/view_pdf', $data, true);
+		echo $html; die;
 		$this->pdfgenerator->generate($html, $nama, true, 'A4', 'portrait');
 
 	}

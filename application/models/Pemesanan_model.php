@@ -8,6 +8,12 @@ class Pemesanan_model extends CI_Model {
     public $column_search = array('kode_transaksi','username','status', 'tanggal'); 
     public $order = array('id_pemesanan' => 'DESC');
 
+    public function __construct()
+    {
+        parent::__construct();
+        date_default_timezone_set("Asia/Jakarta");
+    }
+    
     public function pesanan_terbaru_limit($limit, $start = 0, $q = NULL) 
     {
         $this->db->from('tb_pemesanan');
@@ -92,6 +98,7 @@ class Pemesanan_model extends CI_Model {
 
 	public function konfirmasi($kode_transaksi)
 	{
+
 		$this->db->where('kode_transaksi', $kode_transaksi);
 		$this->db->update('tb_pemesanan', array(
             'status'=>'Dalam Proses',

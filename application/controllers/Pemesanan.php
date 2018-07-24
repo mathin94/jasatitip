@@ -2,14 +2,12 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 use Carbon\Carbon;
 
-
 class Pemesanan extends CI_Controller {
 
 	public function __construct()
 	{
 		parent::__construct();
-		setlocale(LC_TIME, 'Indonesia');
-		Carbon::setLocale('id');
+		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Pemesanan_model', 'order');
 		$this->load->model('Users_model');
 		$this->load->library('form_validation');
@@ -112,23 +110,28 @@ class Pemesanan extends CI_Controller {
 	{
 		allowed('pelanggan');
 		$id = $this->uri->segment(3);
-
+		$this->load->model('Ongkir_model', 'ongkir');
 		$this->load->library('Pdfgenerator');
 		$this->load->helper('tanggal');
 
 		$pemesanan = $this->order->get_pemesanan_one($id);
-
+		$carbon 	= new Carbon($pemesanan['tanggal']);
+		$tanggal 	= tanggal_indo($carbon->format('Y-m-d'));
+		$ongkir 	= $this->ongkir->get_by_kecamatanid($pemesanan['kecamatan_id']);
 		$data = array(
 			'title'		=> 'Rincian Pemesanan',
 			'total'		=> 'Rp. ' . number_format($pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['kode_unik']),
 			'kode_transaksi'=> $pemesanan['kode_transaksi'],
 			'totalbayar'	=> $pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['kode_unik'],
+			'ongkir'		=> $ongkir['biaya'],
+			'tanggal'		=> $tanggal,
 			'pemesanan'		=> $pemesanan,
 			'totber'		=> $this->total_berat($id),
 			'detail_pesanan'=> $this->order->get_detail($id)
 		);
 		$nama = "invoice-".$pemesanan['kode_transaksi'];
 		$html = $this->load->view('pemesanan/invoice_pdf', $data, true);
+		echo $html; die;
 		$this->pdfgenerator->generate($html, $nama, true, 'A4', 'landscape');
 	}
 
@@ -145,7 +148,7 @@ class Pemesanan extends CI_Controller {
 			$pemesanan 	= $this->order->get_pemesanan_one($id_pesanan);
 			$ongkir 	= $this->ongkir->get_by_kecamatanid($pemesanan['kecamatan_id']);
 			$carbon 	= new Carbon($pemesanan['tanggal']);
-			$tanggal 	= $carbon->format('d F Y');
+			$tanggal 	= tanggal_indo($carbon->format('Y-m-d'));
 			$data = array(
 				'title'		=> 'Rincian Pemesanan',
 				'total'		=> 'Rp. ' . number_format($pemesanan['total_harga']+$pemesanan['total_ongkir']+$pemesanan['kode_unik']),
