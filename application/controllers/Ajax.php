@@ -217,6 +217,62 @@ class Ajax extends CI_Controller {
         echo json_encode($output);
     }
 
+    public function json_laporan_ongkir()
+    {
+        $list = $this->order->get_datatables(NULL, array('Dalam Proses', 'Dikirim', 'Terkirim', 'Selesai'));
+
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->kode_transaksi;
+            $row[] = $field->tanggal;
+            $row[] = 'Rp. ' . number_format($field->total_ongkir);
+ 
+            $data[] = $row;
+        }
+ 
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->order->count_all(NULL, array('Dalam Proses','Dikirim', 'Terkirim', 'Selesai')),
+            "recordsFiltered" => $this->order->count_filtered(NULL, array('Dalam Proses','Dikirim', 'Terkirim', 'Selesai')),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
+    public function json_laporan_jastip()
+    {
+        $list = $this->order->get_datatables(NULL, array('Dalam Proses', 'Dikirim', 'Terkirim', 'Selesai'));
+
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->kode_transaksi;
+            $row[] = $field->tanggal;
+            $row[] = 'Rp. ' . number_format($field->total_fee);
+ 
+            $data[] = $row;
+        }
+ 
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->order->count_all(NULL, array('Dalam Proses','Dikirim', 'Terkirim', 'Selesai')),
+            "recordsFiltered" => $this->order->count_filtered(NULL, array('Dalam Proses','Dikirim', 'Terkirim', 'Selesai')),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
 	public function json_order_baru()
 	{
 		$role = 'pelanggan';

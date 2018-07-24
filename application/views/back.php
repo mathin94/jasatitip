@@ -199,13 +199,13 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo site_url('administrator/data_order') ?>" class="nav-link">
+                <a href="<?php echo site_url('administrator/laporan_ongkir') ?>" class="nav-link">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>Pemasukan Ongkir</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="<?php echo site_url('administrator/data_order') ?>" class="nav-link">
+                <a href="<?php echo site_url('administrator/laporan_jastip') ?>" class="nav-link">
                   <i class="fa fa-circle-o nav-icon"></i>
                   <p>Pemasukan Biaya Jasa</p>
                 </a>

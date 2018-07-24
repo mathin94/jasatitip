@@ -9,7 +9,8 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><?php echo $title ?></li>
+            <li class="breadcrumb-item"><a href="#">Laporan</a></li>
+            <li class="breadcrumb-item">Pemasukan Ongkir</li>
           </ol>
         </div>
       </div>
@@ -65,10 +66,8 @@
                   <tr>
                     <th width="10">No</th>
                     <th width="150">Kode Transaksi</th>
-                    <th width="150">E-Mail Pengguna</th>
-                    <th width="150">Username</th>
                     <th width="150">Tanggal Transaksi</th>
-                    <th width="200">Total Pembayaran</th>
+                    <th width="200">Total Ongkir</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
@@ -100,7 +99,7 @@
   });
 
   $("#cetak").click(function() {
-    window.open('<?php echo site_url('administrator/cetak_laporan?start_date=') ?>'+$("#periode").data('daterangepicker').startDate.format('YYYY-MM-DD H:mm:ss')+'&end_date='+$("#periode").data('daterangepicker').endDate.format('YYYY-MM-DD H:mm:ss'), '_blank');
+    window.open('<?php echo site_url('administrator/cetak_laporan_ongkir?start_date=') ?>'+$("#periode").data('daterangepicker').startDate.format('YYYY-MM-DD H:mm:ss')+'&end_date='+$("#periode").data('daterangepicker').endDate.format('YYYY-MM-DD H:mm:ss'), '_blank');
   });
 
   var oTable;
@@ -130,7 +129,7 @@
               },
           },
           "ajax": {
-              "url": "<?php echo site_url('ajax/json_laporan') ?>",
+              "url": "<?php echo site_url('ajax/json_laporan_ongkir') ?>",
               "type": "POST",
               "data": function ( data ) {
                 data.start_date = $("#periode").data('daterangepicker').startDate.format('YYYY-MM-DD H:mm:ss');

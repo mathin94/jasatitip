@@ -263,15 +263,29 @@ class Pemesanan_model extends CI_Model {
         return $this->db->get()->result();
     }
 
-    public function total_data_range($start_date, $end_date)
+    public function total_data_range($start_date, $end_date, $type = 'all')
     {
         $this->_query_report($start_date, $end_date);
         $data = $this->db->get()->result();
 
         $total = 0;
-        
-        foreach ($data as $row) {
-            $total += ($row->total_ongkir+$row->total_harga+$row->total_fee+$row->kode_unik);
+        if ($type == 'all') 
+        {
+            foreach ($data as $row) {
+                $total += ($row->total_ongkir+$row->total_harga+$row->total_fee+$row->kode_unik);
+            }
+        }
+        elseif($type == 'ongkir')
+        {
+            foreach ($data as $row) {
+                $total += ($row->total_ongkir);
+            }
+        }
+        elseif($type == 'jastip')
+        {
+            foreach ($data as $row) {
+                $total += ($row->total_fee);
+            }
         }
 
         return $total;
