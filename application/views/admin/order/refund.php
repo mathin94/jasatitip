@@ -79,6 +79,10 @@
                             <label for="">Atas Nama</label>
                             <input type="text" class="form-control" id="atas_nama" placeholder="Input field" readonly="">
                           </div>
+                          <div class="form-group">
+                            <label for="">Total Refund</label>
+                            <input type="text" class="form-control" id="total_refund" placeholder="Input field" readonly="">
+                          </div>
                         </form>
                       </div>
                     </div>
@@ -138,19 +142,46 @@
 
       });
 
-      function detail_refund(id) {
-        $.ajax({
-          url: '<?php echo site_url('ajax/detail_refund') ?>',
-          type: 'POST',
-          dataType: 'JSON',
-          data: {id_refund: id},
-          success: function(data) {
-            $("#nama_bank").val(data.nama_bank);
-            $("#rekening_bank").val(data.rekening_bank);
-            $("#atas_nama").val(data.atas_nama);
-            $("#modal-detail").modal('show');
-          }
-        });
-      }
+      
   });
+  function detail_refund(id) {
+    $.ajax({
+      url: '<?php echo site_url('ajax/detail_refund') ?>',
+      type: 'POST',
+      dataType: 'JSON',
+      data: {id_refund: id},
+      success: function(data) {
+        $("#nama_bank").val(data.nama_bank);
+        $("#rekening_bank").val(data.rekening_bank);
+        $("#atas_nama").val(data.atas_nama);
+        $("#total_refund").val(data.jumlah_refund);
+        $("#modal-detail").modal('show');
+      }
+    });
+  }
+
+  function ubah_status(id) {
+    swal({
+        title: 'Selesaikan Permintaan Refund ?',
+        text: "Status akan di ubah menjadi telah di refund",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'green',
+        confirmButtonText: 'Ya',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.value) {
+          $.ajax({
+            url: '<?php echo site_url('ajax/ubah_status_refund') ?>',
+            type: 'POST',
+            dataType: 'JSON',
+            data: {id_refund: id},
+            success: function(data) {
+              notifikasi('Status Refund Telah Diselesaikan', 'success', 'fa fa-check');
+              window.location.href='<?php echo site_url('administrator/data_refund') ?>'
+            }
+          });
+        }
+    })
+  }
 </script>

@@ -194,7 +194,11 @@ class Ajax extends CI_Controller {
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $field) {
-            
+            $button = '<a href="#" onclick="detail_refund('.$field->id_refund.')"><i class="fa fa-eye"></i> Lihat Detail</a>';
+            if ($field->status_refund == 'Menunggu Refund') 
+            {
+                $button .= '<br><a href="#" onclick="ubah_status('.$field->id_refund.')"><i class="fa fa-refresh"></i> Ubah Status</a>';
+            }
             $no++;
             $row = array();
             $row[] = $no;
@@ -203,7 +207,7 @@ class Ajax extends CI_Controller {
             $row[] = $field->alasan_pembatalan;
             $row[] = $field->status_refund;
             $row[] = $field->tanggal_pengajuan;
-            $row[] = '<a href="#" onclick="detail_refund('.$field->id_refund.')"><i class="fa fa-eye"></i> Lihat Detail</a><br><a href="'.site_url('administrator/lihat_data_refund/'.$field->id_refund).'"><i class="fa fa-refresh"></i> Ubah Status</a>';
+            $row[] = $button;
  
             $data[] = $row;
         }
@@ -218,13 +222,25 @@ class Ajax extends CI_Controller {
         echo json_encode($output);
     }
 
+    public function ubah_status_refund()
+    {
+        $id = $this->input->post('id_refund');
+        $this->refund->ubah_status($id);
+        echo "1";
+    }
+
     public function detail_refund()
     {
         allowed('administrator');
         $id_refund = $this->input->post('id_refund');
         $data = $this->refund->get_one($id_refund);
-
-        echo json_encode($data);
+        $output = array(
+            'nama_bank' => $data['nama_bank'],
+            'rekening_bank' => $data['rekening_bank'],
+            'atas_nama' => $data['atas_nama'],
+            'jumlah_refund' => format_rupiah($data['jumlah_refund']),
+        );
+        echo json_encode($output);
 
     }
 

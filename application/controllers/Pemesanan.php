@@ -38,7 +38,9 @@ class Pemesanan extends CI_Controller {
 			$order 		= $this->order->get_pemesanan_one($id);
 			$trackstat  = 'c0';
 
-			if ($order['status'] == 'Dalam Proses') 
+			if ($order['status'] == 'Dibatalkan') 
+				$trackstat = 'c0';
+			elseif ($order['status'] == 'Dalam Proses') 
 				$trackstat = 'c1';
 			elseif ($order['status'] == 'Dikirim')
 				$trackstat = 'c2';

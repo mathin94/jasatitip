@@ -121,10 +121,10 @@
 	            			<td><?php echo $refund->alasan_pembatalan ?> | Menunggu Refund Dana</td>
 	            			<td><?php echo normalize_datetime($refund->tanggal_pengajuan) ?></td>
 	            		</tr>
-	            		<?php if ($refund->status_refund == 'Selesai'): ?>
+	            		<?php if ($refund->status_refund == 'Telah Direfund'): ?>
 	            		<tr>
 	            			<td>Dana Telah Di Refund</td>
-	            			<td><?php echo 'Dana Pemesanan Sebesar Rp. ' . number_format($refund->jumlah_refund) . ' Telah di refund ke ' . $refund->nomor_rekening . ' (' . $refund->nama_bank . ') atas nama ' . $refund->atas_nama ?></td>
+	            			<td><?php echo 'Dana Pemesanan Sebesar Rp. ' . number_format($refund->jumlah_refund) . ' Telah di refund ke ' . $refund->rekening_bank . ' (' . $refund->nama_bank . ') atas nama ' . $refund->atas_nama ?></td>
 	            			<td><?php echo normalize_datetime($refund->tanggal_refund) ?></td>
 	            		</tr>	
 	            		<?php endif ?>
@@ -132,7 +132,7 @@
 	            	</tbody>
 	            </table>
 	            <div class="col-md-6">
-	            	<?php if ($trackstat != 'c4'): ?>
+	            	<?php if ($trackstat != 'c4' AND $trackstat != 'c0'): ?>
 	            	<a href="<?php echo site_url('pemesanan/konfirmasi_penerimaan/'.$this->uri->segment(3)) ?>" title=""><button type="button" class="btn btn-success">Konfirmasi Penerimaan Barang</button></a>	
 	            	<?php endif ?>
 	            	<?php if ($trackstat == 'c1' OR $trackstat == 'c2'): ?>

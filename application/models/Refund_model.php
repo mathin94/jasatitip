@@ -24,8 +24,17 @@ class Refund_model extends CI_Model {
     {
         $this->db->from($this->table);
         $this->db->join('tb_pemesanan', 'tb_pemesanan.id_pemesanan = tb_refund.pemesanan_id');
-        $this->db->where('pemesanan_id', $id);
-        return $this->db->get()->row();
+        $this->db->where('id_refund', $id);
+        return $this->db->get()->row_array();
+    }
+
+    public function ubah_status($id)
+    {
+        $this->db->where('id_refund', $id);
+        $this->db->update($this->table, array(
+            'status_refund' => 'Telah Direfund',
+            'tanggal_refund'=> date('Y-m-d H:i:s')
+        ));
     }
 
     //Datatables Method
