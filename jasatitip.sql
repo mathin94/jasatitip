@@ -88955,17 +88955,16 @@ CREATE TABLE IF NOT EXISTS `tb_produk` (
   `gambar_1` varchar(255) DEFAULT NULL,
   `gambar_2` varchar(255) DEFAULT NULL,
   `gambar_3` varchar(255) DEFAULT NULL,
-  `seo` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_produk`),
   UNIQUE KEY `kode_produk` (`kode_produk`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table jasatitip.tb_produk: ~3 rows (approximately)
 /*!40000 ALTER TABLE `tb_produk` DISABLE KEYS */;
-INSERT IGNORE INTO `tb_produk` (`id_produk`, `kategori_id`, `kode_produk`, `nama_produk`, `harga`, `fee_jastip`, `berat`, `deskripsi`, `gambar_1`, `gambar_2`, `gambar_3`, `seo`) VALUES
-	(1, 2, 'LMRANK001', 'Lemari Anak Hello Kitty', '1900000', '25000', '20000', 'Lemari pakaian anak dengan motif karakter Hello Kitty,berwarna pink yang pastinya disukai anak\r\nTerdiri atas 2 pintu dengan bukaan sliding, sisi pertama merupakan lemari gantung baju dan sisi lainnya terdapat area lipat yang dilengkapi laci\r\nUkuran : 120x53x192 ', '7324478_fe44f443-45fa-42c5-bb0d-e78b797d4d76.jpg', 'Capture.JPG', 'cicilan.JPG', NULL),
-	(6, 1, 'MJMKN001', 'Set Meja Makan Neo Hera Dengan 4 Kursi - Hitam', '5399000', '50000', '15000', 'Meja Makan Cuy', '10040547_51.JPG', NULL, NULL, NULL),
-	(7, 2, 'FUR001', 'Kursi staff kantor oscar polos', '340000', '30000', '7000', '#stock terlarisss\r\nKursi staff kantor\r\nbahan oscar/kain polos warna hitam.\r\nbarang second refurbish berkualitas.\r\nmudah dibersihkan & awet.\r\nhydrolik lancar kaki roda mulus. ', '1516949_9766910f-c14c-4d47-be64-544fd9e35538.jpg', NULL, NULL, NULL);
+INSERT IGNORE INTO `tb_produk` (`id_produk`, `kategori_id`, `kode_produk`, `nama_produk`, `harga`, `fee_jastip`, `berat`, `deskripsi`, `gambar_1`, `gambar_2`, `gambar_3`) VALUES
+	(1, 2, 'LMRANK001', 'Lemari Anak Hello Kitty', '1900000', '25000', '20000', 'Lemari pakaian anak dengan motif karakter Hello Kitty,berwarna pink yang pastinya disukai anak\r\nTerdiri atas 2 pintu dengan bukaan sliding, sisi pertama merupakan lemari gantung baju dan sisi lainnya terdapat area lipat yang dilengkapi laci\r\nUkuran : 120x53x192 ', '7324478_fe44f443-45fa-42c5-bb0d-e78b797d4d76.jpg', 'Capture.JPG', 'cicilan.JPG'),
+	(6, 1, 'MJMKN001', 'Set Meja Makan Neo Hera Dengan 4 Kursi - Hitam', '5399000', '50000', '15000', 'Meja Makan Cuy', '10040547_51.JPG', NULL, NULL),
+	(7, 2, 'FUR001', 'Kursi staff kantor oscar polos', '340000', '30000', '7000', '#stock terlarisss\r\nKursi staff kantor\r\nbahan oscar/kain polos warna hitam.\r\nbarang second refurbish berkualitas.\r\nmudah dibersihkan & awet.\r\nhydrolik lancar kaki roda mulus. ', '1516949_9766910f-c14c-4d47-be64-544fd9e35538.jpg', NULL, NULL);
 /*!40000 ALTER TABLE `tb_produk` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_refund
@@ -88983,10 +88982,10 @@ CREATE TABLE IF NOT EXISTS `tb_refund` (
   PRIMARY KEY (`id_refund`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_refund: ~0 rows (approximately)
+-- Dumping data for table jasatitip.tb_refund: ~1 rows (approximately)
 /*!40000 ALTER TABLE `tb_refund` DISABLE KEYS */;
 INSERT IGNORE INTO `tb_refund` (`id_refund`, `pemesanan_id`, `jumlah_refund`, `alasan_pembatalan`, `status_refund`, `tanggal_refund`, `tanggal_pengajuan`, `nama_bank`, `rekening_bank`, `atas_nama`) VALUES
-	(1, 12, '2511358', 'Ingin Mengganti Detail Pemesanan', 'Menunggu Refund', NULL, '2018-07-24 15:54:10', 'BCA', '12312313', 'Anggi Permata');
+	(1, 12, '2511358', 'Ingin Mengganti Detail Pemesanan', 'Telah Direfund', '2018-07-25 21:51:12', '2018-07-24 15:54:10', 'BCA', '12312313', 'Anggi Permata');
 /*!40000 ALTER TABLE `tb_refund` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_users
