@@ -115,10 +115,29 @@
 	            			<td><?php echo normalize_datetime($row->timestamp) ?></td>
 	            		</tr>
 	            		<?php endforeach ?>
+	            		<?php if ($pemesanan['status'] == 'Dibatalkan'): ?>
+	            		<tr>
+	            			<td>Dibatalkan</td>
+	            			<td><?php echo $refund->alasan_pembatalan ?> | Menunggu Refund Dana</td>
+	            			<td><?php echo normalize_datetime($refund->tanggal_pengajuan) ?></td>
+	            		</tr>
+	            		<?php if ($refund->status_refund == 'Selesai'): ?>
+	            		<tr>
+	            			<td>Dana Telah Di Refund</td>
+	            			<td><?php echo 'Dana Pemesanan Sebesar Rp. ' . number_format($refund->jumlah_refund) . ' Telah di refund ke ' . $refund->nomor_rekening . ' (' . $refund->nama_bank . ') atas nama ' . $refund->atas_nama ?></td>
+	            			<td><?php echo normalize_datetime($refund->tanggal_refund) ?></td>
+	            		</tr>	
+	            		<?php endif ?>
+	            		<?php endif ?>
 	            	</tbody>
 	            </table>
 	            <div class="col-md-6">
-	            	<button type="button" class="btn btn-success">Konfirmasi Penerimaan Barang</button>
+	            	<?php if ($trackstat != 'c4'): ?>
+	            	<a href="<?php echo site_url('pemesanan/konfirmasi_penerimaan/'.$this->uri->segment(3)) ?>" title=""><button type="button" class="btn btn-success">Konfirmasi Penerimaan Barang</button></a>	
+	            	<?php endif ?>
+	            	<?php if ($trackstat == 'c1' OR $trackstat == 'c2'): ?>
+	            	<a href="<?php echo site_url('pemesanan/pembatalan/'.$this->uri->segment(3)) ?>" title=""><button type="button" class="btn btn-danger">Request Pembatalan</button></a>	
+	            	<?php endif ?>
 	            </div>
 	            <br>
 	            <br>

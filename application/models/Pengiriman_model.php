@@ -29,9 +29,30 @@ class Pengiriman_model extends CI_Model {
     	}
     }
 
+    public function terima_dan_selesai($id,$data)
+    {
+        $this->db->where('id_pengiriman', $id);
+        $update = $this->db->update('tb_pengiriman', $data);
+        if ($update) 
+        {
+            $this->db->insert('tb_pengiriman_detail', array(
+                'pengiriman_id'=>$id,
+                'status'       =>'Pesanan Diterima',
+                'keterangan'    => 'Pesanan Telah diterima oleh ' . $data['nama_penerima']
+            ));
+
+            $this->db->insert('tb_pengiriman_detail', array(
+                'pengiriman_id'=>$id,
+                'status'       =>'Pesanan Selesai',
+                'keterangan'    => 'Pesanan Telah Selesai '
+            ));
+        }
+    }
+
     public function get_detail($id)
     {
         $this->db->from($this->table);
+        $this->db->select('tb_pengiriman_detail.status, tb_pengiriman_detail.keterangan, tb_pengiriman_detail.timestamp');
         $this->db->join('tb_pengiriman_detail', 'tb_pengiriman.id_pengiriman = tb_pengiriman_detail.pengiriman_id');
         $this->db->join('tb_pemesanan', 'tb_pemesanan.id_pemesanan = tb_pengiriman.pemesanan_id');
         $this->db->where('pemesanan_id', $id);

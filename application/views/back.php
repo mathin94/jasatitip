@@ -183,6 +183,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="<?php echo base_url('administrator/data_refund') ?>" class="nav-link">
+              <i class="nav-icon fa fa-money"></i>
+              <p>
+                Permintaan Refund
+              </p>
+            </a>
+          </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-bar-chart"></i>

@@ -88835,7 +88835,7 @@ CREATE TABLE IF NOT EXISTS `tb_konfirmasi_transfer` (
   PRIMARY KEY (`id_konfirmasi`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_konfirmasi_transfer: ~2 rows (approximately)
+-- Dumping data for table jasatitip.tb_konfirmasi_transfer: ~4 rows (approximately)
 /*!40000 ALTER TABLE `tb_konfirmasi_transfer` DISABLE KEYS */;
 INSERT IGNORE INTO `tb_konfirmasi_transfer` (`id_konfirmasi`, `kode_transaksi`, `nama_pengirim`, `bank_pengirim`, `rekening_pengirim`, `rekening_tujuan`, `jumlah_transfer`, `status`, `waktu_konfirmasi`, `bukti_transfer`) VALUES
 	(12, 'TRX-22072018-000001', 'Anggi', 'BCA', '11587464', 'Bank BCA - 11805462', '9639954', 'N', '2018-07-22 08:34:57', 'c0cc6b0966ea316a5efdcf91f59c26c2.JPG'),
@@ -88882,8 +88882,8 @@ CREATE TABLE IF NOT EXISTS `tb_pemesanan` (
 -- Dumping data for table jasatitip.tb_pemesanan: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tb_pemesanan` DISABLE KEYS */;
 INSERT IGNORE INTO `tb_pemesanan` (`id_pemesanan`, `user_id`, `alamat_id`, `kode_transaksi`, `total_ongkir`, `total_harga`, `total_fee`, `kode_unik`, `tanggal`, `waktu_konfirmasi`, `status`) VALUES
-	(12, 15, 2, 'TRX-22072018-000001', '216000', '2240000', '55000', 358, '2018-07-22 10:28:42', '2018-07-22 09:27:26', 'Dalam Proses'),
-	(13, 15, 2, 'TRX-22072018-000002', '232000', '6079000', '110000', 729, '2018-07-22 16:19:46', '2018-07-22 09:25:17', 'Dikirim');
+	(12, 15, 2, 'TRX-22072018-000001', '216000', '2240000', '55000', 358, '2018-07-22 10:28:42', '2018-07-22 09:27:26', 'Dibatalkan'),
+	(13, 15, 2, 'TRX-22072018-000002', '232000', '6079000', '110000', 729, '2018-07-22 16:19:46', '2018-07-22 09:25:17', 'Selesai');
 /*!40000 ALTER TABLE `tb_pemesanan` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_pemesanan_detail
@@ -88897,7 +88897,7 @@ CREATE TABLE IF NOT EXISTS `tb_pemesanan_detail` (
   PRIMARY KEY (`id_pemesanan_detail`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_pemesanan_detail: ~3 rows (approximately)
+-- Dumping data for table jasatitip.tb_pemesanan_detail: ~4 rows (approximately)
 /*!40000 ALTER TABLE `tb_pemesanan_detail` DISABLE KEYS */;
 INSERT IGNORE INTO `tb_pemesanan_detail` (`id_pemesanan_detail`, `pemesanan_id`, `produk_id`, `harga`, `fee_jastip`, `qty`) VALUES
 	(17, 12, 1, '1900000', '25000', 1),
@@ -88918,10 +88918,10 @@ CREATE TABLE IF NOT EXISTS `tb_pengiriman` (
   PRIMARY KEY (`id_pengiriman`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_pengiriman: ~0 rows (approximately)
+-- Dumping data for table jasatitip.tb_pengiriman: ~1 rows (approximately)
 /*!40000 ALTER TABLE `tb_pengiriman` DISABLE KEYS */;
 INSERT IGNORE INTO `tb_pengiriman` (`id_pengiriman`, `pemesanan_id`, `nama_kurir`, `nomor_kurir`, `tgl_kirim`, `tgl_terima`, `nama_penerima`) VALUES
-	(2, 13, 'Budi', '085756568978', '2018-07-22 16:25:45', NULL, NULL);
+	(2, 13, 'Budi', '085756568978', '2018-07-22 16:25:45', '2018-07-24 11:47:05', 'Anggi Permata Sary');
 /*!40000 ALTER TABLE `tb_pengiriman` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_pengiriman_detail
@@ -88932,12 +88932,14 @@ CREATE TABLE IF NOT EXISTS `tb_pengiriman_detail` (
   `keterangan` varchar(255) DEFAULT NULL,
   `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_pengiriman_detail`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table jasatitip.tb_pengiriman_detail: ~0 rows (approximately)
+-- Dumping data for table jasatitip.tb_pengiriman_detail: ~3 rows (approximately)
 /*!40000 ALTER TABLE `tb_pengiriman_detail` DISABLE KEYS */;
 INSERT IGNORE INTO `tb_pengiriman_detail` (`id_pengiriman_detail`, `pengiriman_id`, `status`, `keterangan`, `timestamp`) VALUES
-	(2, 2, 'Dalam Pengiriman', 'Pesanan Sedang Dikirim Oleh Kurir', '2018-07-22 16:25:45');
+	(2, 2, 'Dalam Pengiriman', 'Pesanan Sedang Dikirim Oleh Kurir', '2018-07-22 16:25:45'),
+	(3, 2, 'Pesanan Diterima', 'Pesanan Telah diterima oleh Anggi Permata Sary', '2018-07-24 11:46:37'),
+	(4, 2, 'Pesanan Selesai', 'Pesanan Telah Selesai ', '2018-07-24 11:46:37');
 /*!40000 ALTER TABLE `tb_pengiriman_detail` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_produk
@@ -88973,12 +88975,18 @@ CREATE TABLE IF NOT EXISTS `tb_refund` (
   `jumlah_refund` varchar(50) DEFAULT NULL,
   `alasan_pembatalan` varchar(255) DEFAULT NULL,
   `status_refund` varchar(255) DEFAULT NULL,
-  `tanggal_refund` varchar(255) DEFAULT NULL,
+  `tanggal_refund` datetime DEFAULT NULL,
+  `tanggal_pengajuan` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `nama_bank` varchar(50) DEFAULT NULL,
+  `rekening_bank` varchar(50) DEFAULT NULL,
+  `atas_nama` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_refund`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table jasatitip.tb_refund: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_refund` DISABLE KEYS */;
+INSERT IGNORE INTO `tb_refund` (`id_refund`, `pemesanan_id`, `jumlah_refund`, `alasan_pembatalan`, `status_refund`, `tanggal_refund`, `tanggal_pengajuan`, `nama_bank`, `rekening_bank`, `atas_nama`) VALUES
+	(1, 12, '2511358', 'Ingin Mengganti Detail Pemesanan', 'Menunggu Refund', NULL, '2018-07-24 15:54:10', 'BCA', '12312313', 'Anggi Permata');
 /*!40000 ALTER TABLE `tb_refund` ENABLE KEYS */;
 
 -- Dumping structure for table jasatitip.tb_users

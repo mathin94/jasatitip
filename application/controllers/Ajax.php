@@ -11,7 +11,8 @@ class Ajax extends CI_Controller {
 		$this->load->model('Users_model', 'users');
 		$this->load->model('Pemesanan_model', 'order');
         $this->load->model('Ongkir_model', 'ongkir');
-		$this->load->model('Users_model', 'users');
+        $this->load->model('Users_model', 'users');
+		$this->load->model('Refund_model', 'refund');
 	}
 
     public function reset_pass()
@@ -186,6 +187,46 @@ class Ajax extends CI_Controller {
         //output dalam format JSON
         echo json_encode($output);
 	}
+
+    public function json_request_refund()
+    {
+        $list = $this->refund->get_datatables(array('Menunggu Refund'));
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->kode_transaksi;
+            $row[] = format_rupiah($field->jumlah_refund);
+            $row[] = $field->alasan_pembatalan;
+            $row[] = $field->status_refund;
+            $row[] = $field->tanggal_pengajuan;
+            $row[] = '<a href="#" onclick="detail_refund('.$field->id_refund.')"><i class="fa fa-eye"></i> Lihat Detail</a><br><a href="'.site_url('administrator/lihat_data_refund/'.$field->id_refund).'"><i class="fa fa-refresh"></i> Ubah Status</a>';
+ 
+            $data[] = $row;
+        }
+ 
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->ongkir->count_all(array('Menunggu Refund')),
+            "recordsFiltered" => $this->ongkir->count_filtered(array('Menunggu Refund')),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
+    public function detail_refund()
+    {
+        allowed('administrator');
+        $id_refund = $this->input->post('id_refund');
+        $data = $this->refund->get_one($id_refund);
+
+        echo json_encode($data);
+
+    }
 
     public function json_laporan()
     {

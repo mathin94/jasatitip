@@ -83,7 +83,22 @@
           <!-- ./col -->
         </div>
         <!-- /.row -->
-        
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-primary">
+              <div class="inner">
+                <h3><?php echo $count_refund ?></h3>
+
+                <p>Permintaan Refund</p>
+              </div>
+              <div class="icon">
+                <i class="fa fa-money"></i>
+              </div>
+              <a href="<?php echo base_url('administrator/data_refund') ?>" class="small-box-footer">Lihat Data <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+        </div>
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->

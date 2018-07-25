@@ -54,8 +54,162 @@ class Pemesanan extends CI_Controller {
 				'pemesanan'		=> $order,
 				'trackstat'		=> $trackstat
 			);
+			if ($order['status'] == 'Dibatalkan') 
+			{
+				$this->load->model('Model_app', 'crud');
+				$data['refund'] = $this->crud->view_where('tb_refund', array('pemesanan_id'=>$order['id_pemesanan']))->row();
+			}
+
 
 			$this->template->load('front', 'pemesanan/tracking', $data);
+		}
+		else
+		{
+			redirect(site_url(),'refresh');
+		}
+	}
+
+	public function konfirmasi_penerimaan()
+	{
+		allowed('pelanggan');
+		$id = $this->uri->segment(3);
+
+		if ($id != '') 
+		{
+			$this->load->model('Pengiriman_model', 'kirim');
+			$pengiriman = $this->kirim->get_one($id);
+			$order 		= $this->order->get_pemesanan_one($id);
+
+			if (isset($_POST['submit'])) 
+			{
+				// Config Validasi
+	            $config = array(
+					array(
+						'field' => 'nama_penerima',
+						'label'	=> 'Nama Penerima',
+						'rules'	=> 'required'
+					)
+				);
+
+				$post = $this->input->post();
+
+				$this->form_validation->set_rules($config);
+
+				if ($this->form_validation->run() == FALSE)
+	            {
+					$data = array(
+						'title'			=> 'Konfirmasi Penerimaan Barang',
+						'post'			=> $post
+					);
+
+	        		$this->template->load('front', 'pemesanan/terima', $data);
+	            }
+	            else
+	            {
+	            	$data_kirim = array(
+	            		'nama_penerima' => $post['nama_penerima'],
+	            		'tgl_terima'	=> date('Y-m-d H:i:s')
+	            	);
+
+	            	$terima = $this->kirim->terima_dan_selesai($pengiriman->id_pengiriman, $data_kirim);
+            		$this->order->update($order['id_pemesanan'], array('status'=>'Selesai'));
+	            	$this->session->set_flashdata('notifikasi', '<script>
+							notifikasi("Pemesanan Telah Selesai, Terima Kasih :D, Ditunggu Orderan Selanjutnya", "success", "fa fa-check");
+	            		</script>');
+	            	redirect(base_url('pemesanan'));
+	            }
+			}
+			else
+			{
+				$post['kode_transaksi'] = $order['kode_transaksi'];
+				$post['id_pemesanan']	= $order['id_pemesanan'];
+
+				$data = array(
+					'title'			=> 'Konfirmasi Penerimaan Barang',
+					'post'			=> $post
+				);
+
+				$this->template->load('front', 'pemesanan/terima', $data);
+			}
+		}
+		else
+		{
+			redirect(site_url(),'refresh');
+		}
+	}
+
+	public function pembatalan()
+	{
+		$id = $this->uri->segment(3);
+		allowed('pelanggan');
+		if ($id != '') 
+		{
+			$this->load->model('Pengiriman_model', 'kirim');
+			$pengiriman = $this->kirim->get_one($id);
+			$order 		= $this->order->get_pemesanan_one($id);
+
+			if (isset($_POST['submit'])) 
+			{
+	            $config = array(
+					array(
+						'field' => 'nama_bank',
+						'label'	=> 'Nama Bank',
+						'rules'	=> 'required'
+					),
+					array(
+						'field' => 'nomor_rekening',
+						'label'	=> 'Nomor Rekening',
+						'rules'	=> 'required'
+					),
+					array(
+						'field' => 'atas_nama',
+						'label'	=> 'Nama Pemilik Rekening',
+						'rules'	=> 'required|min_length[10]'
+					),
+					array(
+						'field' => 'alasan_pembatalan',
+						'label'	=> 'Alasan Pembatalan',
+						'rules'	=> 'required|min_length[10]'
+					)
+				);
+
+				$post = $this->input->post();
+				$this->form_validation->set_rules($config);
+
+				if ($this->form_validation->run() == FALSE)
+	            {
+					$data = array(
+						'title'			=> 'Pengajuan Pembatalan Pesanan',
+						'post'			=> $post
+					);
+
+	        		$this->template->load('front', 'pemesanan/pembatalan', $data);
+	            }
+	            else
+	            {
+	            	$data_refund = array(
+	            		'pemesanan_id' 		=> $order['id_pemesanan'],
+	            		'jumlah_refund'		=> $order['total_ongkir']+$order['total_harga']+$order['total_fee']+$order['kode_unik'],
+	            		'alasan_pembatalan' => $post['alasan_pembatalan'],
+	            		'nama_bank'			=> $post['nama_bank'],
+	            		'rekening_bank'		=> $post['nomor_rekening'],
+	            		'atas_nama'			=> $post['atas_nama'],
+	            		'status_refund'		=> 'Menunggu Refund'
+	            	);
+
+	            	$this->order->batalkan($data_refund);
+	            	$this->session->set_flashdata('notifikasi', '<script>
+							notifikasi("Pemesanan Dibatalkan, Tunggu Admin Untuk Mengirim dana refund Anda", "success", "fa fa-check");
+	            		</script>');
+	            	redirect(base_url('pemesanan'));
+	            }
+			}
+			else
+			{
+				$data['title'] = 'Pengajuan Pembatalan Pesanan';
+				$data['post']['kode_transaksi'] = $order['kode_transaksi'];
+				$this->template->load('front', 'pemesanan/pembatalan', $data);
+			}
 		}
 		else
 		{

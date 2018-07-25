@@ -16,7 +16,7 @@ class Administrator extends CI_Controller {
 		$this->load->model('Produk_model', 'produk');
 		$this->load->model('Users_model', 'users');
 		$this->load->model('Pemesanan_model', 'order');
-
+		$this->load->model('Refund_model', 'refund');
 		$cekdata = $this->session->userdata('logged_in');
 		if (empty($cekdata)) 
 		{
@@ -31,8 +31,8 @@ class Administrator extends CI_Controller {
 					'count_produk'		=> $this->produk->count_all(),
 					'count_pelanggan'	=> $this->users->count_all('pelanggan'),
 					'total_order' 		=> $this->order->total_pemesanan(),
-					'order_baru'		=> $this->order->total_pemesanan_baru()
-
+					'order_baru'		=> $this->order->total_pemesanan_baru(),
+					'count_refund'		=> $this->refund->total_refund()
 				];
 				$this->template->load('back','admin/home', $data);
         	}
@@ -1202,6 +1202,17 @@ class Administrator extends CI_Controller {
 		{
 			redirect('administrator','refresh');
 		}
+	}
+
+	public function data_refund()
+	{
+		allowed('administrator');
+
+        $data = array(
+            'title'         => 'Data Permintaan Refund',
+        );
+        
+        $this->template->load('back','admin/order/refund', $data);
 	}
 
 

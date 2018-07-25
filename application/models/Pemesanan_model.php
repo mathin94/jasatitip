@@ -50,7 +50,7 @@ class Pemesanan_model extends CI_Model {
     public function total_pemesanan()
     {
     	$this->db->from('tb_pemesanan');
-    	$this->db->where_in('status', array('Sedang Diproses','Dikirim', 'Terkirim'));
+    	$this->db->where_in('status', array('Dikirim', 'Terkirim', 'Selesai'));
     	return $this->db->get()->num_rows();
     }
 
@@ -86,6 +86,18 @@ class Pemesanan_model extends CI_Model {
 		$this->db->where('id_pemesanan', $id);
         return $this->db->update('tb_pemesanan', $data);
 	}
+
+    public function batalkan($data)
+    {
+        $refund = $this->db->insert('tb_refund', $data);
+        if ($refund) 
+        {
+            $this->db->where('id_pemesanan', $data['pemesanan_id']);
+            return $batal = $this->db->update('tb_pemesanan', array(
+                'status' => 'Dibatalkan'
+            ));
+        }
+    }
 
 	public function cek_pesanan($userid, $id)
 	{
