@@ -265,7 +265,7 @@ class Pemesanan_model extends CI_Model {
         $this->db->join('tb_users', 'tb_users.id_user = tb_pemesanan.user_id');
         $this->db->where('tanggal >=', $start_date);
         $this->db->where('tanggal <=', $end_date);
-        $this->db->where_in('status', array('Dikirim','Dalam Proses', 'Terkirim'));
+        $this->db->where_in('status', array('Dikirim','Dalam Proses', 'Terkirim', 'Selesai'));
         $this->db->order_by('id_pemesanan', 'desc');
         
     }

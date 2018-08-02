@@ -135,7 +135,7 @@
 	            	<?php if ($trackstat != 'c4' AND $trackstat != 'c0'): ?>
 	            	<a href="<?php echo site_url('pemesanan/konfirmasi_penerimaan/'.$this->uri->segment(3)) ?>" title=""><button type="button" class="btn btn-success">Konfirmasi Penerimaan Barang</button></a>	
 	            	<?php endif ?>
-	            	<?php if ($trackstat == 'c1' OR $trackstat == 'c2'): ?>
+	            	<?php if ($trackstat == 'c1'): ?>
 	            	<a href="<?php echo site_url('pemesanan/pembatalan/'.$this->uri->segment(3)) ?>" title=""><button type="button" class="btn btn-danger">Request Pembatalan</button></a>	
 	            	<?php endif ?>
 	            </div>
